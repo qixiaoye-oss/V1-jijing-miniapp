@@ -48,3 +48,7 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.menu-item__value {
+  color: #00A6ED;
+}
