@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "input-auto-height": "/components/input-auto-height-logo/input-auto-height-logo",
+    "tap-action": "/components/tap-action/index",
+    "progress-bar": "/components/progress-bar/progress-bar"
+  }
+}

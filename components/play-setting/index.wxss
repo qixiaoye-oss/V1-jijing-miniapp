@@ -1,0 +1,77 @@
+/**
+ * play-setting 组件样式
+ */
+
+/* 确保组件本身不占用布局空间 */
+:host {
+  display: contents;
+}
+
+.play-setting {
+  background: #ffffff;
+}
+
+.play-setting__group {
+  display: block;
+}
+
+.play-setting__group--border {
+  border-top: 1px solid #d7d7d7;
+}
+
+.play-setting__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.play-setting__radio {
+  margin: 0 20px;
+}
+
+.play-setting__switch {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.play-setting__switch switch {
+  transform: scale(0.8);
+  transform-origin: center left;
+}
+
+.play-setting__buttons {
+  border-top: 7px solid #f7f7f7;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-setting__btn {
+  width: 50%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-setting__btn:active {
+  background-color: #ececec;
+}
+
+.play-setting__btn--cancel {
+  color: gray;
+}
+
+.play-setting__btn--confirm {
+  color: red;
+}
+
+.play-setting__btn-divider {
+  background-color: #f7f7f7;
+  height: 54px;
+  width: 2px;
+}

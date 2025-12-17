@@ -1,0 +1,93 @@
+/**
+ * word_dictation 页面特有样式
+ * 公共样式已提取至 /style/dictation-common.wxss
+ */
+
+/* 覆盖全局 page padding */
+page {
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* ==================== 卡片内容区域 ==================== */
+
+.swiper_content_container {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 9px;
+  width: calc(100% - 20px);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  box-sizing: border-box;
+  margin-bottom: 1px;
+}
+
+/* ==================== 答案显示区域 ==================== */
+
+.content_container {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+  font-size: 22px;
+  flex-grow: 1;
+}
+
+.article_open_cell {
+  width: 100%;
+  height: 45%;
+}
+
+/* 覆盖公共样式的尺寸 */
+.close_open_cell {
+  width: 100%;
+  height: 45%;
+}
+
+/* ==================== 答题区域 ==================== */
+
+.question_container {
+  width: 100%;
+}
+
+.paper_tip {
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: #999999;
+}
+
+/* 输入框容器 */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ==================== 内容区域高度（配合固定按钮组） ==================== */
+
+/* 注意：middle_of_adaptive 的 flex 由 inline style 动态控制 */
+/* 当 contentAreaHeight 有值时，inline style 会设置 height 和 flex: none */
+
+/* btn-page-bottom 内的 btn-group-split 不需要 margin（覆盖 dictation-common.wxss） */
+.btn-page-bottom .btn-group-split {
+  margin: 0;
+  width: 100%;
+}
+
+/* ==================== 其他 ==================== */
+
+.img_flag {
+  width: 29px;
+  height: 29px;
+}

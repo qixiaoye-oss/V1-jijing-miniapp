@@ -1,0 +1,20 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/load-error.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="loadError" data="{{loadError}}" />
+<skeleton type="list" loading="{{loading}}" rows="{{5}}" avatar="{{true}}" />
+<view class="main-page" wx:if="{{!loading && list.length > 0}}">
+  <view wx:for="{{list}}" wx:key="item" class="list_container {{item.reviewCount == 0 ?'no_review':''}} sub-item__header" bindtap="toKeyPage" data-id="{{item.id}}">
+    <view class="sub-item__title" style="background: {{item.colorRgba}};">
+      <image class="sub-item__title--icon" wx:if="{{item.iconUrl}}" src="{{item.iconUrl}}" />
+      <view class="sub-item__title--text" wx:if="{{item.name}}">{{item.name}}</view>
+    </view>
+    <view class="tag tag__multi tag__multi--orange">
+      <view>复习{{item.reviewCount}}次</view>
+      <view class="tag__intervals"></view>
+      <view>最近{{item.reviewDate}}天</view>
+    </view>
+  </view>
+</view>
+<view class="page-safe-area"></view>
+<view class="no-data" wx:if="{{!loading && list.length == 0}}">暂无数据</view>

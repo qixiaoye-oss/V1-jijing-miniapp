@@ -1,0 +1,235 @@
+page {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+image {
+  width: 17px;
+  height: 17px;
+}
+
+text {
+  line-height: 1;
+}
+
+.page {
+  height: 100vh;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  justify-content: space-around;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header_container {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.progress_bar_base {
+  background-color: #d7d7d7;
+  height: 4px;
+  width: 94%;
+}
+
+.progress_bar_bg {
+  background-color: #00A6ED;
+  height: 4px;
+}
+
+.middle_of_adaptive {
+  flex-grow: 1;
+  position: relative;
+  width: 750rpx;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.swiper_container {
+  height: 100%;
+  width: 100%;
+}
+
+.swiper_item_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translate(0%, -2px) translateZ(0%，0px) !important;
+}
+
+.swiper_content_container {
+  border: 1px solid #a30014;
+  border-radius: 9px;
+  width: calc(100% - 20px);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin-bottom: 1px;
+}
+
+.content_container {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15px;
+  height: 54%;
+  color: #000000;
+  position: relative;
+}
+
+.content {
+  width: 100%;
+  font-size: 23px;
+  font-weight: bold;
+  height: 100%;
+  overflow: hidden;
+}
+
+.content_text_color {
+  color: rgba(0, 0, 0, 0);
+}
+
+.content_text {
+  background-color: #f2f2f2;
+  margin: 0;
+  line-height: normal;
+  height: 25px;
+  padding: 4px 0;
+  margin-right: 2px;
+  border-left: 3px solid #00A6ED;
+  background-size: 50%;
+  z-index: 3;
+  position: relative;
+}
+
+.selected {
+  background-color: #d6e4fd;
+}
+
+.narrator {
+  position: absolute;
+  top: -8px;
+  left: 5px;
+  font-size: 10px;
+  background-color: #f6e5e3;
+  color: #ff6146;
+  padding: 2px 4px;
+  border-radius: 4px;
+  z-index: 99;
+}
+
+.narrator_m {
+  background-color: #04a6f2;
+  color: #7fdefc;
+}
+
+/* 答题 */
+.question_container {
+  max-height: 44%;
+  padding: 0px 15px 15px;
+  font-size: 16px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.question_contant {
+  font-weight: bold;
+  line-height: 23px;
+  color: #000000;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: auto;
+  max-height: 115px;
+  margin-bottom: 15px;
+}
+
+.z-max {
+  z-index: 10000;
+}
+
+.paper_tip {
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999999;
+  box-sizing: border-box;
+}
+
+.img_flag {
+  width: 29px;
+  height: 29px;
+}
+
+.set_play_number_container {
+  background: #ffffff;
+}
+
+.cells {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.cell_checkbox {
+  margin: 0 20px;
+}
+
+.article_show_flag {
+  border-top: 1px solid #d7d7d7;
+}
+
+.but_container {
+  border-top: 7px solid #f7f7f7;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.but {
+  width: 50%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.but:active {
+  background-color: #ececec;
+}
+
+.but_cancle {
+  color: gray;
+}
+
+.but_confirm {
+  color: red;
+}
+
+.but_interval {
+  background-color: #f7f7f7;
+  height: 54px;
+  width: 2px;
+}
+
+/* 按钮组样式 - 使用固定底部模式 */
+.btn-page-bottom .btn-group-split {
+  margin: 0;
+  width: 100%;
+}

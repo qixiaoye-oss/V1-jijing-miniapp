@@ -1,0 +1,4 @@
+<view class="writing_container" style="width: {{width}};">
+  <textarea class="writing_cell" style="padding-top: {{padtop}}rpx;height: {{height}}rpx;" bindfocus="inputFocus" bindblur="inputBlur" bindinput="inputVal" bindlinechange="linechange" disable-default-padding="true" value="{{value}}" maxlength="2000"></textarea>
+  <view class="write_pla" wx:if="{{showPl}}" bindtap="inputFocus">填入答案词...</view>
+</view>

@@ -1,0 +1,68 @@
+/* 页面级滚动模式 - 使用 padding-bottom 为按钮组留空间 */
+page {
+  padding-bottom: var(--button-group-total-height-single);
+}
+
+.base_page {
+  /* 移除固定高度，允许页面滚动 */
+}
+
+.question_container {
+  border: 1px solid var(--solid-border-color);
+  border-radius: 9px;
+  padding: 15px;
+}
+
+.user_choice_cell {
+  font-size: 18px;
+  line-height: 1;
+  color: #b43040;
+}
+
+.f17 {
+  font-size: 14px;
+}
+
+.user_choice {
+  text-decoration: line-through;
+}
+
+.reference_answer_cell {
+  font-size: 18px;
+  color: #00A6ED;
+  font-weight: bold;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.reference_answer {
+  margin-right: 5px;
+}
+
+.chinese_cell {
+  font-size: 14px;
+  color: #999999;
+  margin-top: 10px;
+}
+
+/* 按钮行（错误次数+操作按钮） */
+.question_container .flex_row_bet {
+  margin-top: 10px;
+}
+
+.error_count_bg {
+  padding: 5px;
+  font-size: 12px;
+  line-height: 1;
+  border: 1px solid transparent;
+  background: #f69b22;
+  border-radius: 3px;
+  color: #ffffff;
+}
+
+.bg_red {
+  background: #b43040;
+}
+

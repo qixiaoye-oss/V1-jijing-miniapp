@@ -1,0 +1,381 @@
+@import "style/weui.wxss";
+@import "style/layout.wxss";
+@import "style/theme.wxss";
+@import "style/button-group.wxss";
+@import "style/default-styles.wxss";
+@import "style/page-loading.wxss";
+@import "style/audio-loading.wxss";
+@import "style/load-error.wxss";
+@import "style/dictation-common.wxss";
+@import "style/skeleton.wxss";
+
+page {
+  background-color: #ffffff;
+  padding: 20px;
+  line-height: 1.4;
+  font-size: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  --color-1: #00A6ED;
+  --color-2: #00D26A;
+  --color-5: #979797;
+  --border-color-1: #00A6ED;
+  --border-color-2: #00D26A;
+  --border-color-3: #d6e4fd;
+  --border-color-4: #d7d7d7;
+  --border-color-6: #f2f2f2;
+  --background-color-1: #00A6ED;
+  --background-color-3: #d6e4fd;
+  --background-color-4: #d7d7d7;
+  --background-color-5: #fdebd3;
+  --background-color-6: #f2f2f2;
+
+  --base-color: #00A6ED;
+  --color-gray-6: rgba(151, 151, 151, 1);
+
+  /* 用户页-主题色 */
+  --theme-color: rgba(0, 166, 237, 1);
+  --theme-bcakground-color: rgba(0, 166, 237, 0.15);
+
+  /* 新样式---所有边框颜色 */
+  --solid-border-color: rgba(0, 0, 0, 0.3);
+  --dashed-border-color: rgba(0, 0, 0, 0.3);
+  /* 练习页主要颜色 */
+  --question-color: rgba(0, 166, 237, 1);
+  --question-bcakground-color: rgba(0, 166, 237, 0.15)
+}
+
+view {
+  box-sizing: border-box;
+}
+
+.layout_grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 15px;
+}
+
+.flex_row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex_row_cen {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex_row_end {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.flex_row_aro {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.flex_row_bet {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.flex_col_cen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex_col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img_w60 {
+  width: 60px;
+  height: 60px;
+}
+
+.img_w50 {
+  width: 50px;
+  height: 50px;
+}
+
+.img_w30 {
+  width: 30px;
+  height: 30px;
+}
+
+.img_w25 {
+  width: 25px;
+  height: 25px;
+}
+
+.img_w20 {
+  width: 20px;
+  height: 20px;
+}
+
+.img_w15 {
+  width: 15px;
+  height: 15px;
+}
+
+.font_color_base {
+  color: #00A6ED;
+}
+
+.font_color_grey {
+  color: #7f7f7f;
+}
+
+.font_bold {
+  font-weight: bold;
+  text-align: center;
+}
+
+.bg_D6E4FD {
+  background-color: #d6e4fd;
+  border-radius: 9px;
+}
+
+.bg_f7f6fB {
+  background-color: #f7f6fb;
+  border-radius: 9px;
+}
+
+.bg_3478F6 {
+  background-color: #00A6ED;
+}
+
+.bg_f7f6fB_bor {
+  background-color: #ffffff;
+  border: 1px solid #00A6ED;
+  border-radius: 9px;
+}
+
+.bor_3478F6_bg_fff {
+  border-radius: 9px;
+  border: 1px solid #00A6ED;
+  background-color: #fff;
+}
+
+.bor_3478f6 {
+  border: 1px solid #00A6ED;
+  border-radius: 9px;
+}
+
+.bor_DC0118 {
+  border: 1px solid #dc0118;
+  border-radius: 9px;
+}
+
+.w_100 {
+  width: 100%;
+}
+
+.w_33 {
+  width: 33%;
+}
+
+.w_30 {
+  width: 30%;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #7f7f7f;
+  margin-bottom: 10px;
+}
+
+wx-slider .wx-slider-handle-wrapper {
+  height: 8px;
+  border-radius: 0;
+}
+
+.report_issues_cell {
+  width: 100%;
+  text-align: right;
+  padding-right: 20px;
+  font-size: 13px;
+  margin-top: 5px;
+  height: 20px;
+  line-height: 20px;
+  box-sizing: border-box;
+}
+
+
+.title {
+  font-size: 18px;
+  line-height: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.title_number {
+  font-size: 20px;
+}
+
+.subtitle {
+  font-size: 12px;
+  line-height: 25px;
+  height: 25px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.complete {
+  position: absolute;
+  height: 25px;
+  left: 0;
+  background: rgba(0, 166, 237, 0.2);
+  z-index: 0;
+}
+
+.subtitle_completed {
+  border: 1px solid #00D26A;
+  background: #00D26A;
+  color: #ffffff;
+  border-radius: 9px;
+  padding-right: 26px !important;
+}
+
+.subtitle_completed::after {
+  content: "";
+  width: 3px;
+  height: 7px;
+  position: absolute;
+  right: 7px;
+  bottom: 5px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  transform: rotate(45deg);
+}
+
+.no_open_bg {
+  background: #acacac;
+}
+
+.z10 {
+  position: relative;
+  z-index: 10;
+}
+
+.ml10 {
+  margin-left: 10px;
+}
+
+.mr5 {
+  margin-right: 5px;
+}
+
+._dis {
+  opacity: 0.3;
+}
+
+.narrator {
+  position: absolute;
+  top: -8px;
+  left: 5px;
+  transform: scale(0.4);
+  transform-origin: left top;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 99;
+}
+
+.narrator_man {
+  background-color: #04a6f2;
+  color: #7fdefc;
+}
+
+.narrator_woman {
+  background-color: #f6e5e3;
+  color: #ff6146;
+}
+
+.intensive_sentence_text {
+  background-color: #f2f2f2;
+  padding: 4px 0;
+  margin-right: 5px;
+  border-left: 3px solid #00A6ED;
+  position: relative;
+  z-index: 3;
+}
+
+.intensive_sentence_text_active {
+  background-color: #d6e4fd;
+}
+
+.hidden_text {
+  color: rgba(0, 0, 0, 0);
+}
+
+.weui-actionsheet {
+  z-index: 10000 !important;
+}
+
+/* 布局样式 v1.0*/
+/* row-水平居中-垂直居中 */
+.row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+/* row-水平居中-垂直分隔两边 */
+.row-center-between {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col-center {
+  display: flex;
+  flex-direction: column;
+}
+
+.radius-9 {
+  border-radius: 9px;
+}
+
+.radius-6 {
+  border-radius: 6px;
+}
+
+.radius-3 {
+  border-radius: 3px;
+}
+
+/* 点击效果 */
+.tap-active {
+  opacity: 0.7;
+  transform: scale(0.98);
+  transition: all 0.1s ease-out;
+}

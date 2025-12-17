@@ -1,0 +1,119 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/audio-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="audioLoading" data="{{audioDownProgress}}" />
+<view class="page">
+  <view class="header_container flex_row_cen font_color_base">
+    <view class="progress_bar_base">
+      <progress-bar current="{{wordCurrent + 1}}" total="{{list.length}}" />
+    </view>
+  </view>
+  <view class="middle_of_adaptive flex_row" style="{{contentAreaHeight ? 'height:' + contentAreaHeight + 'px;flex:none' : ''}}">
+    <swiper class="swiper_container" previous-margin="30px" next-margin="30px" bindchange='swiperSwitch' current='{{swiperCurrent}}'>
+      <swiper-item class="swiper_item_container font_color_base" wx:for="{{list}}" wx:key="item" wx:for-item="group" wx:for-index="groupIndex">
+        <view class="swiper_content_container">
+          <view class="content_container" wx:if="{{group.list[0].answerType == 1}}">
+            <view wx:if="{{baseShowArticle}}" class="article_open_cell flex_col_cen">
+              <view class="font_color_base reference_answer_cell">{{group.list[0].referenceAnswer}}</view>
+              <view class="translation_text" wx:if="{{group.list[0].chinese}}">{{group.list[0].chinese}}</view>
+            </view>
+            <block wx:else>
+              <view wx:if="{{showArticle}}" class="article_open_cell flex_col_cen">
+                <view class="font_color_base reference_answer_cell">{{group.list[0].referenceAnswer}}</view>
+                <view class="translation_text" wx:if="{{group.list[0].chinese}}">{{group.list[0].chinese}}</view>
+              </view>
+              <block wx:else>
+                <view class="close_open_cell flex_row_cen">
+                  <image class="close_open_img" src="/images/close_open.png"></image>
+                </view>
+              </block>
+            </block>
+          </view>
+          <image class="content_img" mode="aspectFit" wx:if="{{group.list[0].imageUrl}}" src="{{group.list[0].imageUrl}}"></image>
+          <view wx:else class="content_img">
+            <view wx:for="{{group.list[0].options}}" wx:key="option" wx:for-item="option" wx:for-index="optionIndex" class="flex_row options">
+              <view>{{option.choice}}</view>
+              <view>{{option.content}}</view>
+            </view>
+          </view>
+          <view class="question_container" wx:for="{{group.list}}" wx:key="idx">
+            <view scroll-y='true' class="question_contant">{{item.question}}</view>
+            <block wx:if="{{mode === 'paper'}}">
+              <view class="paper_tip">请在纸上写出空格内需要填入的词</view>
+            </block>
+            <block wx:if="{{mode === 'computer'}}">
+              <view class="input-wrapper">
+                <input-auto-height labelModel="{{group.list[0].answerType}}" nowSign="{{nowSign}}" sign="{{group.id}}" value="{{item.userAnswer}}" bind:input="inputVal" bind:enter="nextAudio" data-idx="{{index}}"></input-auto-height>
+              </view>
+            </block>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class="btn-page-bottom">
+    <view class="btn-group-hint-banner" data-icon="list" wx:if="{{mode === 'computer'}}">
+      PC/Pad上按Enter切换下一个
+    </view>
+    <view class="btn-group-split">
+      <view class="btn-group-split__header btn-pos-center" wx:if="{{articlePage}}">
+        <tap-action icon="play" bindtap="startPlayAudio">
+          <view>继续</view>
+          <image src="/images/v2/play_bt.png"></image>
+        </tap-action>
+      </view>
+      <view class="btn-group-split__header btn-pos-center" wx:else>
+        <tap-action icon="play" bindtap="listenAgain">
+          <view>重播本句</view>
+          <image src="/images/v2/replay_bt.png"></image>
+        </tap-action>
+        <tap-action icon="play" wx:if="{{status === 0}}" bindtap="startPlayAudio">
+          <view>开始播放</view>
+          <image src="/images/v2/play_bt.png"></image>
+        </tap-action>
+        <tap-action icon="play" wx:if="{{status === 1}}" bindtap="pauseAudio">
+          <view>正在播放</view>
+          <image src="/images/v2/pause_bt.png"></image>
+        </tap-action>
+        <tap-action icon="play" wx:if="{{status === 2 && wordCurrent + 1 < list.length}}" bindtap="nextAudio">
+          <view>懂了/下一句</view>
+          <image src="/images/v2/end_bt.png"></image>
+        </tap-action>
+        <tap-action icon="correct" class="{{shakeCorrectBtn ? 'btn--shake' : ''}}" wx:if="{{wordCurrent + 1 === list.length}}" bindtap="saveQue">
+          <view>对答案</view>
+          <image src="/images/v2/correct_bt.png"></image>
+        </tap-action>
+      </view>
+      <view class="btn-group-split__divider"></view>
+      <view class="btn-group-split__footer">
+        <view class="btn-pos-left">
+          <tap-action icon="setting" bindtap="numberSet">
+            <image src="/images/v2/setting_bt.png"></image>
+          </tap-action>
+          <block wx:if="{{list[wordCurrent].list[0].answerType == 1}}">
+            <tap-action icon="visible" wx:if="{{baseShowArticle}}">
+              <image src="/images/v2/visible_bt.png"></image>
+            </tap-action>
+            <tap-action icon="visible" wx:if="{{!baseShowArticle}}">
+              <image wx:if="{{!showArticle}}" src="/images/v2/hidden_bt.png" bindtap="showArticle"></image>
+              <image wx:if="{{showArticle}}" src="/images/v2/visible_bt.png" bindtap="showArticle"></image>
+            </tap-action>
+          </block>
+        </view>
+        <view class="btn-pos-right">
+          <tap-action icon="list" bindtap="toList" wx:if="{{!articlePage}}">
+            <text>句子列表</text>
+            <image src="/images/v2/list_bt.png"></image>
+          </tap-action>
+        </view>
+      </view>
+    </view>
+  </view>
+  <play-setting
+    show="{{numberSetWinShow}}"
+    playNumber="{{playNumber}}"
+    showArticle="{{baseShowArticle}}"
+    bind:cancel="onSettingCancel"
+    bind:confirm="onSettingConfirm"
+  ></play-setting>
+</view>

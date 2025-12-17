@@ -1,0 +1,6 @@
+<template name="loadError">
+  <view class="load-error" wx:if="{{loadError}}">
+    <view class="load-error__text">加载失败</view>
+    <view class="load-error__btn" bindtap="retryLoad">点击重试</view>
+  </view>
+</template>

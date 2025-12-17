@@ -1,0 +1,20 @@
+.list_container {
+  border: 1px solid #e4e4e4;
+  border-radius: 9px;
+  padding: 15px 15px 0;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.explain_title {
+  color: #a0a0a0;
+}
+
+.listening_content {
+  margin: 15px 0;
+}
+
+.listening_content_text {
+  font-size: 17px;
+  line-height: 1.5;
+}

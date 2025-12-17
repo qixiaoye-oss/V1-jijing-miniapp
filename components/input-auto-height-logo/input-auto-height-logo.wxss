@@ -1,0 +1,57 @@
+.writing_container {
+  display: flex;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 5px;
+  width: 100%;
+  position: relative;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.label {
+  padding: 5px;
+  text-align: center;
+  background-color: rgba(171, 171, 171, 0.2);
+  color: #000000;
+  box-sizing: border-box;
+  padding: 5px;
+  line-height: 1;
+  border-radius: 3px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+}
+
+.model_2 {
+  color: #f5a132;
+  background-color: #fef5e9;
+}
+
+.model_3 {
+  color: #07c1c1;
+  background-color: #dcf6f6;
+}
+
+.writing_cell {
+  width: calc(100% - 35px);
+  min-height: 25px;
+  line-height: 25px;
+  background: #ffffff;
+  margin-left: 5px;
+}
+
+.write_pla {
+  position: absolute;
+  font-size: 16px;
+  color: rgba(151, 151, 151, 1);
+  left: 46px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+}

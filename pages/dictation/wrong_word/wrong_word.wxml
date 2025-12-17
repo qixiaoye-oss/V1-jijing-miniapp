@@ -1,0 +1,51 @@
+<import src="/templates/page-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<skeleton type="sentence" loading="{{loading}}" rows="{{5}}" />
+<wxs src="/utils/util.wxs" module="wxsUtil" />
+<view class="base_page layout_grid" wx:if="{{!loading}}">
+  <view wx:for="{{wordList}}" wx:key="item" class="question_container">
+    <view class="user_choice_cell">
+      <block wx:if="{{item.operationType === '1'}}">
+        <view class="f17">速刷标注</view>
+      </block>
+      <block wx:else>
+        <block wx:if="{{item.userChoice}}">
+          <view class="user_choice">{{item.userChoice}}</view>
+        </block>
+        <block wx:else>
+          <view class="f17">未填写</view>
+        </block>
+      </block>
+    </view>
+    <view class="reference_answer_cell">
+      <view class="reference_answer" wx:for="{{item.answerArr}}" wx:for-item='answer' wx:key="answer">{{answer}}</view>
+    </view>
+    <view class="chinese_cell">{{item.chinese}}</view>
+    <view class="flex_row_bet">
+      <block wx:if="{{item.operationType === '1'}}">
+        <view class="error_count_bg">速刷标注</view>
+      </block>
+      <block wx:else>
+        <view class="error_count_bg {{item.errorCount > 2 ?'bg_red':''}}">错{{item.errorCount}}次</view>
+      </block>
+      <view class="btn-pos-right">
+        <tap-action icon="play">
+          <image class="audio_play_img" src="/images/v2/pause_bt.png" wx:if="{{item.audioPlay ==='play'}}" data-index="{{index}}" bindtap="pauseAudio"></image>
+          <image class="audio_play_img" src="/images/v2/play_bt.png" wx:else data-index="{{index}}" bindtap="playAudio"></image>
+        </tap-action>
+        <tap-action icon="setting" bindtap="operation" data-item="{{item}}">
+          <image src="/images/v2/setting_bt.png"></image>
+        </tap-action>
+      </view>
+    </view>
+  </view>
+  <view class="no-data" wx:if="{{wordList.length == 0}}">暂无数据</view>
+</view>
+<view class="btn-page-bottom" wx:if="{{_isDataReady}}">
+  <view class="btn-group-single">
+    <tap-action icon="correct" bind:tap="review">
+      <view>打卡</view>
+      <image src="/images/v2/correct_bt.png"></image>
+    </tap-action>
+  </view>
+</view>

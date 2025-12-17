@@ -1,0 +1,5 @@
+<template name="pageLoading">
+  <view class="page-loading-bar" wx:if="{{loading}}">
+    <view class="page-loading-bar__inner" style="width: {{loadProgress}}%;"></view>
+  </view>
+</template>

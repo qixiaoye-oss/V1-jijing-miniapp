@@ -1,0 +1,62 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/load-error.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="loadError" data="{{loadError}}" />
+<skeleton type="list" loading="{{loading}}" rows="{{5}}" avatar="{{true}}" />
+<view class="main-page" wx:if="{{!loading && list.length > 0}}">
+  <view class="main-item">
+    <view class="main-item__title" style="background: {{parent.colorRgba}};">
+      <image class="main-item__title--icon" wx:if="{{parent.iconUrl}}" src="{{parent.iconUrl}}"></image>
+      <view class="main-item__title--text">
+        <text>{{parent.name}}</text>
+        <text wx:if="{{parent.subtitle}}">{{parent.subtitle}}</text>
+      </view>
+    </view>
+    <block wx:for="{{list}}" wx:for-item="chapter" wx:for-index="chapterIndex" wx:key="id">
+      <view class="sub-item" style="border-color: {{chapter.colorRgb}};" bind:tap="toChildPage" data-item="{{chapter}}" hover-class="tap-active" hover-stay-time="100">
+        <view class="sub-item__header">
+          <view class="sub-item__title" style="background: {{chapter.colorRgba}};">
+            <image class="sub-item__title--icon" wx:if="{{chapter.iconUrl}}" src="{{chapter.iconUrl}}" />
+            <view class="sub-item__title--text" wx:if="{{chapter.name}}">{{chapter.name}}</view>
+          </view>
+        </view>
+        <view class="sub-item__intervals" style="background: {{chapter.colorRgb}};"></view>
+        <view class="sub-item__footer">
+          <block wx:if="{{chapter.accuracy == null}}">
+            <view class="tag tag__multi tag__multi--gray">
+              <view>正确率（未作）</view>
+              <view class="tag__intervals"></view>
+              <view>平均{{chapter.averageAccuracy}}%</view>
+            </view>
+          </block>
+          <block wx:if="{{chapter.accuracy}}">
+            <view class="tag tag__multi tag__multi--orange" wx:if="{{chapter.accuracy < chapter.averageAccuracy}}">
+              <view>正确率{{chapter.accuracy}}%</view>
+              <view class="tag__intervals"></view>
+              <view>平均{{chapter.averageAccuracy}}%</view>
+            </view>
+            <view class="tag tag__multi tag__multi--green" wx:if="{{chapter.accuracy >= chapter.averageAccuracy}}">
+              <view>正确率{{chapter.accuracy}}%</view>
+              <view class="tag__intervals"></view>
+              <view>平均{{chapter.averageAccuracy}}%</view>
+            </view>
+          </block>
+          <view class="tag tag__multi tag__multi--gray" wx:if="{{chapter.isCompleteQ == 0}}">
+            <view>未填空</view>
+          </view>
+          <view class="tag tag__multi tag__multi--green" wx:if="{{chapter.isCompleteQ == 1}}">
+            <view>已填空</view>
+          </view>
+          <view class="tag tag__multi tag__multi--gray" wx:if="{{chapter.isCompleteK == 0}}">
+            <view>未速刷</view>
+          </view>
+          <view class="tag tag__multi tag__multi--green" wx:if="{{chapter.isCompleteK == 1}}">
+            <view>已速刷</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+<view class="page-safe-area"></view>
+<view class="no-data" wx:if="{{!loading && list.length==0}}">暂无数据</view>

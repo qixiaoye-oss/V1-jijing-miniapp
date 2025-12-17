@@ -1,0 +1,41 @@
+.list_container {
+  border: 1px solid #dedede;
+  border-radius: 9px;
+  padding: 15px;
+  margin-bottom: 15px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.listening_header {
+  color: #a0a0a0;
+}
+
+.listening_content {
+  margin-bottom: 10px;
+}
+
+.word_text {
+  font-size: 22px;
+  font-weight: bold;
+  margin-right: 10px;
+  color: #00A6ED;
+}
+
+.word_translate {
+  font-size: 14px;
+  color: #999999;
+}
+
+.sentence_text {
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.sentence_translate {
+  font-size: 14px;
+  color: #999999;
+  line-height: 18px;
+  margin-top: 10px;
+}

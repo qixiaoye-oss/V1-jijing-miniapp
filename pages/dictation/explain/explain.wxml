@@ -1,0 +1,32 @@
+<import src="/templates/page-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<block wx:if="{{_isDataReady}}">
+<view class="list_container">
+  <view class="listening_header">{{param.index}}/{{param.length}}</view>
+  <view class="listening_content">
+    <view class="flex_row">
+      <view class="word_text" wx:for="{{detail.answerArr}}" wx:key="answer" wx:for-item="answer">{{answer}}</view>
+    </view>
+    <view class="word_translate">{{detail.chinese}}</view>
+    <view class="btn-pos-right">
+      <tap-action icon="play">
+        <image src="/images/v2/pause_bt.png" wx:if="{{wordPlay =='play'}}"></image>
+        <image src="/images/v2/play_bt.png" wx:else bindtap="playWordAudio"></image>
+      </tap-action>
+    </view>
+  </view>
+</view>
+<view class="list_container">
+  <view class="listening_header" style="margin-bottom: 5px;">{{param.index}}/{{param.length}}</view>
+  <view class="listening_content">
+    <view class="sentence_text">{{detail.content}}</view>
+    <view class="sentence_translate">{{detail.translate}}</view>
+  </view>
+  <view class="btn-pos-right">
+    <tap-action icon="play">
+      <image src="/images/v2/pause_bt.png" wx:if="{{sentencePlay =='play'}}"></image>
+      <image src="/images/v2/play_bt.png" wx:else bindtap="playSentenceAudio"></image>
+    </tap-action>
+  </view>
+</view>
+</block>

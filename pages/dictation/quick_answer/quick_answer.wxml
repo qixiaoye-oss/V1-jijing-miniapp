@@ -1,0 +1,140 @@
+<import src="/templates/page-loading.wxml" />
+<import src="/templates/audio-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<template is="audioLoading" data="{{audioDownProgress}}" />
+<view class="page font_color_base">
+  <view class="header_container flex_row_cen">
+    <view class="progress_bar_base">
+      <progress-bar current="{{groupCurrent + 1}}" total="{{list.length}}" />
+    </view>
+  </view>
+  <view class="middle_of_adaptive flex_row">
+    <swiper class="swiper_container" previous-margin="30px" next-margin="30px" bindchange='swiperSwitch' current='{{swiperCurrent}}'>
+      <swiper-item class="swiper_item_container">
+        <view class="swiper_item_cell first_swiper_item_cell">
+          <view class="play_audio_prompt">自动播放声音选择</view>
+          <view class="auto_play_fun_cell">
+            <switch color="#00A6ED" checked="{{autoPlayAudio}}" bindchange="switchAutoPlay"></switch>
+            <view class="font_color_grey">自动播放</view>
+          </view>
+          <view class="font_color_grey">
+            <view>打开则自动播放；</view>
+            <view>关闭则不自动播放；</view>
+            <view>可在"播放设置"中随时调节。</view>
+          </view>
+        </view>
+      </swiper-item>
+      <block wx:for="{{list}}" wx:key="item" wx:for-index="index">
+        <block wx:for="{{item.list}}" wx:for-item="citem" wx:key="citem">
+          <swiper-item class="swiper_item_container">
+            <view class="swiper_item_cell answer_swiper_item_cell">
+              <block wx:if="{{baseShowArticle}}">
+                <view>{{citem.answerArr[0]}}</view>
+                <view class="translation_text" wx:if="{{citem.chinese}}">{{citem.chinese}}</view>
+              </block>
+              <block wx:else>
+                <block wx:if="{{showArticle}}">
+                  <view>{{citem.answerArr[0]}}</view>
+                  <view class="translation_text" wx:if="{{citem.chinese}}">{{citem.chinese}}</view>
+                </block>
+                <block wx:else>
+                  <view class="close_open_cell flex_row_cen">
+                    <image class="close_open_img" src="/images/close_open.png"></image>
+                  </view>
+                </block>
+              </block>
+            </view>
+          </swiper-item>
+        </block>
+      </block>
+    </swiper>
+  </view>
+  <view class="btn-group-split">
+    <view class="btn-group-split__header btn-pos-center" wx:if="{{swiperCurrent === 0}}">
+      <tap-action icon="play" bindtap="startPlayFirstAudio">
+        <view>继续</view>
+        <image src="/images/v2/play_bt.png"></image>
+      </tap-action>
+    </view>
+    <view class="btn-group-split__header" wx:else>
+      <tap-action icon="flag" bindtap="label">
+        <view>标注</view>
+        <image class="" src="/images/v2/flag_bt.png"></image>
+      </tap-action>
+      <tap-action icon="play" bindtap="listenAgain">
+        <view>重播本词</view>
+        <image src="/images/v2/replay_bt.png"></image>
+      </tap-action>
+      <block wx:if="{{groupCurrent + 1 === list.length}}">
+        <tap-action icon="play" bindtap="returnPage">
+          <view>返回</view>
+          <image src="/images/v2/save_bt.png"></image>
+        </tap-action>
+      </block>
+      <block wx:else>
+        <tap-action icon="play" wx:if="{{status === 0}}" bindtap="playAudio">
+          <view>开始播放</view>
+          <image src="/images/v2/play_bt.png"></image>
+        </tap-action>
+        <tap-action icon="play" wx:if="{{status === 1}}" bindtap="pauseAudio">
+          <view>正在播放</view>
+          <image src="/images/v2/pause_bt.png"></image>
+        </tap-action>
+        <tap-action icon="play" wx:if="{{status === 2}}" bindtap="nextQuestion">
+          <view>下一个</view>
+          <image src="/images/v2/end_bt.png"></image>
+        </tap-action>
+      </block>
+    </view>
+    <view class="btn-group-split__divider"></view>
+    <view class="btn-group-split__footer" wx:if="{{swiperCurrent === 0}}">
+      <view class="btn-pos-left">
+        <tap-action icon="setting" bindtap="numberSet">
+          <image src="/images/v2/setting_bt.png"></image>
+        </tap-action>
+        <tap-action icon="visible" wx:if="{{baseShowArticle}}">
+          <image src="/images/v2/visible_bt.png"></image>
+        </tap-action>
+        <tap-action icon="visible" wx:if="{{!baseShowArticle}}">
+          <image wx:if="{{!showArticle}}" src="/images/v2/hidden_bt.png" bindtap="showArticle"></image>
+          <image wx:if="{{showArticle}}" src="/images/v2/visible_bt.png" bindtap="showArticle"></image>
+        </tap-action>
+      </view>
+      <view class="btn-pos-right">
+        <tap-action icon="list" bindtap="toList">
+          <text>单词列表</text>
+          <image src="/images/v2/list_bt.png"></image>
+        </tap-action>
+      </view>
+    </view>
+    <view class="btn-group-split__footer" wx:else>
+      <view class="btn-pos-left">
+        <tap-action icon="setting" bindtap="numberSet">
+          <image src="/images/v2/setting_bt.png"></image>
+        </tap-action>
+        <tap-action icon="visible" wx:if="{{baseShowArticle}}">
+          <image src="/images/v2/visible_bt.png"></image>
+        </tap-action>
+        <tap-action icon="visible" wx:if="{{!baseShowArticle}}">
+          <image wx:if="{{!showArticle}}" src="/images/v2/hidden_bt.png" bindtap="showArticle"></image>
+          <image wx:if="{{showArticle}}" src="/images/v2/visible_bt.png" bindtap="showArticle"></image>
+        </tap-action>
+      </view>
+      <view class="btn-pos-right">
+        <tap-action icon="list" bindtap="toList">
+          <text>单词列表</text>
+          <image src="/images/v2/list_bt.png"></image>
+        </tap-action>
+      </view>
+    </view>
+  </view>
+  <play-setting
+    show="{{numberSetWinShow}}"
+    playNumber="{{playNumber}}"
+    showArticle="{{baseShowArticle}}"
+    showAutoPlay="{{true}}"
+    autoPlay="{{autoPlayAudio}}"
+    bind:cancel="onSettingCancel"
+    bind:confirm="onSettingConfirm"
+  ></play-setting>
+</view>

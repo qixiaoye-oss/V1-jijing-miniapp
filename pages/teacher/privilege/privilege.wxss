@@ -1,0 +1,98 @@
+.search_container {
+  background: var(--theme-bcakground-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 750rpx;
+  z-index: 99;
+  padding: 10px 20rpx;
+  box-sizing: border-box;
+}
+
+.search_cell {
+  background: #ffffff;
+  width: 600rpx;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.search_input_cell {
+  width: 95%;
+  height: 24px;
+  line-height: 24px;
+}
+
+.search_but_cell {
+  font-size: 18px;
+  margin-left: 10rpx;
+  width: 100rpx;
+  text-align: center;
+}
+
+.interval {
+  height: 44px;
+}
+
+.user_list_container {
+  height: 60vh;
+}
+
+.prompt {
+  text-align: left;
+  color: #999;
+  font-size: 13px;
+  padding: 5px 0rpx;
+}
+
+.user_cell {
+  padding: 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.form_user_name_cell {
+  padding: 10px 0;
+  font-size: 16px;
+  color: #999;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.authorization_container {
+  padding-top: 5px;
+}
+
+.table_title_cell {
+  margin-bottom: 10px;
+}
+
+.table_cell {
+  width: 33%;
+  text-align: center;
+}
+
+.table_cell:nth-child(2) {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table_content_cell {
+  margin-bottom: 10px;
+}
+
+.table_title {
+  font-size: 14px;
+  color: #999;
+}
+
+.form_fun_cell {
+  margin-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.fun_cell {
+  width: 125px;
+  margin-top: 15px;
+  background-color: var(--theme-bcakground-color) !important;
+  color: #000 !important;
+  font-weight: normal !important;
+  border: 1px solid var(--theme-color);
+}

@@ -1,0 +1,32 @@
+<import src="/templates/page-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<skeleton type="sentence" loading="{{loading}}" rows="{{5}}" />
+<view class="main-page" wx:if="{{!loading && list.length > 0}}">
+  <view wx:for="{{list}}" wx:key="id" wx:for-item="item" wx:for-index="idx" bindtap="back" id="ID{{item.id}}" class="list_container {{item.status === 0?'list_undone':''}}" hover-class="tap-active" hover-stay-time="100">
+    <view class="listening_header flex_row">
+      <view class="list_index">{{idx+1}}/{{list.length}}</view>
+      <view wx:if="{{item.status === 1}}">
+        <view class="label" wx:if="{{item.label}}">{{item.label}}</view>
+      </view>
+    </view>
+    <view class="listening_content">
+      <view wx:for="{{item.list}}" wx:key="index" wx:for-item="citem">
+        <view class="flex_row">
+          <view class="answer_bor_cell" wx:for="{{citem.answerArr}}" wx:key="answer" wx:for-item="answer">{{answer}}</view>
+        </view>
+        <view class="translate">{{citem.chinese}}</view>
+        <view class="btn-pos-right">
+          <tap-action icon="play">
+            <image src="/images/v2/pause_bt.png" wx:if="{{citem.audioPlay =='play'}}"></image>
+            <image src="/images/v2/play_bt.png" wx:else bindtap="playAudio" data-idx="{{idx}}"></image>
+          </tap-action>
+          <tap-action icon="goto" bindtap="toDetail" data-idx="{{idx}}">
+            <image src="/images/v2/goto_bt.png"></image>
+          </tap-action>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="page-safe-area"></view>
+<view class="no-data" wx:if="{{!loading && list.length==0}}">暂无数据</view>

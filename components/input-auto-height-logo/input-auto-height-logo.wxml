@@ -1,0 +1,12 @@
+<view class="writing_container">
+  <view class="label" wx:if="{{labelModel === '1'}}">填空</view>
+  <view class="label model_2" wx:if="{{labelModel === '2'}}">匹配</view>
+  <view class="label model_3" wx:if="{{labelModel === '3'}}">选择</view>
+  <!-- <view class="label">填</view> -->
+  <input class="writing_cell" style="height: 28px;line-height: 28px;" bindfocus="inputFocus" bindblur="inputBlur" bindinput="inputVal" bindlinechange="linechange" disable-default-padding="true" value="{{value}}" maxlength="2000" bindconfirm="inputOver" confirm-type="next" focus="{{autoFocus}}"></input>
+  <view class="write_pla" wx:if="{{showPl}}" bindtap="inputFocus">
+    <text wx:if="{{labelModel === '1'}}">填入答案词...</text>
+    <text wx:else>请填入选项...</text>
+  </view>
+</view>
+<!-- <view>{{sign}} --------- {{nowSign}} --------- {{autoFocus}}</view> -->

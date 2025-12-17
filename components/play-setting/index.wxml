@@ -1,0 +1,32 @@
+<page-container show="{{show}}" round="{{true}}" position="bottom" bind:clickoverlay="onOverlayClick">
+  <view class="play-setting">
+    <!-- 播放次数选择 -->
+    <radio-group class="play-setting__group" bindchange="onPlayNumberChange">
+      <label wx:for="{{[1,2,3]}}" wx:key="item" class="play-setting__item">
+        <radio class="play-setting__radio" color="#00A6ED" value="{{item}}" checked="{{item == tempPlayNumber}}"></radio>
+        <view>重复播放{{item}}次</view>
+      </label>
+    </radio-group>
+
+    <!-- 文章显示选项 -->
+    <radio-group class="play-setting__group play-setting__group--border" bindtap="onArticleShowTap">
+      <label class="play-setting__item">
+        <radio class="play-setting__radio" color="#00A6ED" checked="{{tempShowArticle}}"></radio>
+        <view>文章显示：常开</view>
+      </label>
+    </radio-group>
+
+    <!-- 自动播放选项（可选） -->
+    <view wx:if="{{showAutoPlay}}" class="play-setting__switch play-setting__group--border">
+      <switch color="#00A6ED" checked="{{tempAutoPlay}}" bindchange="onAutoPlayChange"></switch>
+      <view>自动播放</view>
+    </view>
+
+    <!-- 按钮 -->
+    <view class="play-setting__buttons">
+      <view class="play-setting__btn play-setting__btn--cancel" bindtap="onCancel">取消</view>
+      <view class="play-setting__btn-divider"></view>
+      <view class="play-setting__btn play-setting__btn--confirm" bindtap="onConfirm">确认</view>
+    </view>
+  </view>
+</page-container>

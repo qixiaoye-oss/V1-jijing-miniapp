@@ -1,0 +1,28 @@
+<import src="/templates/page-loading.wxml" />
+<template is="pageLoading" data="{{loading, loadProgress}}" />
+<veiw class="report-card">
+  <view wx:for="{{list}}" wx:key="id" class="question" hover-class="tap-active" hover-stay-time="100">
+    <view class="question__no">{{index+1}}</view>
+    <switch checked="{{item.status === 2}}" bindchange="switchChange" data-index="{{index}}" color="#F92F60" style='zoom:.8;' />
+    <tap-action icon="correct" wx:if="{{item.status === 1}}">
+      <image src="/images/v2/correct_bt.png"></image>
+    </tap-action>
+    <tap-action icon="flag" wx:if="{{item.status === 2}}">
+      <image src="/images/v2/wrong_bt.png"></image>
+    </tap-action>
+    <view class="question__user-answer" bindtap="change" data-qid="{{item.id}}" data-index="{{index + 1}}">
+      <text wx:for="{{item.answerArr}}" wx:for-item='answer' wx:key="answer">{{answer}}</text>
+    </view>
+    <tap-action icon="next" bindtap="change" data-qid="{{item.id}}" data-index="{{index + 1}}">
+      <image src="/images/v2/next_bt.png"></image>
+    </tap-action>
+  </view>
+</veiw>
+<view class="btn-page-bottom" wx:if="{{_isDataReady}}">
+  <view class="btn-group-single">
+    <tap-action icon="save" bindtap="next">
+      <view>完成并返回</view>
+      <image src="/images/v2/save_bt.png"></image>
+    </tap-action>
+  </view>
+</view>

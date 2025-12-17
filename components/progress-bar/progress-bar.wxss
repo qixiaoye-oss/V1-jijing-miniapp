@@ -1,0 +1,38 @@
+/**
+ * Progress Bar Component Styles
+ * @description 使用 CSS 变量支持主题定制
+ * @version 1.0.0
+ */
+
+/* 进度条容器 */
+.progress-cell {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 进度轨道（底色灰色） */
+.progress-track {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: var(--solid-border-color, rgba(0, 0, 0, 0.3));
+  border-radius: 2px;
+}
+
+/* 进度填充（主题色） */
+.progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background-color: var(--theme-color, rgba(0, 166, 237, 1));
+  border-radius: 2px;
+}
+
+/* 进度文字 */
+.progress-text {
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--theme-color, rgba(0, 166, 237, 1));
+}

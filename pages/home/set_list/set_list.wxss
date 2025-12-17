@@ -1,0 +1,26 @@
+/* Set 列表页样式 */
+
+/* ========== 1. 通知区域 ========== */
+.notice {
+  padding: 15px;
+  background-color: rgba(0, 166, 237, 0.15);
+  border-radius: 9px;
+  margin-bottom: 15px;
+  font-size: 15px;
+}
+
+.notice image {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+}
+
+.notice image:last-child {
+  margin-left: auto;
+  transform: rotate(90deg);
+}
+
+/* ========== 2. 列表项覆盖样式 ========== */
+.sub-item {
+  border-radius: 6px;
+}

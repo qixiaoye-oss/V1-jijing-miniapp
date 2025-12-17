@@ -1,0 +1,17 @@
+<skeleton type="user" loading="{{loading}}" rows="{{4}}" />
+<view class="user-page" wx:if="{{!loading}}">
+  <view class="user-info">
+    <image class="user__avatar" src="{{user.headUrl || '/images/wechat.png'}}" mode="cover" />
+    <view class="user__nickname">
+      <view>{{user.nickName || '微信用户'}}</view>
+      <view class="user__no">（{{user.no}}）</view>
+    </view>
+  </view>
+  <view class="menu-item" bind:tap="toUpdateUserInfo">修改用户信息</view>
+  <view class="menu-item" bind:tap="showRole">查看权限有效期</view>
+  <block wx:if="{{user.isManager == 1}}">
+    <view class="menu-item" bind:tap="toUpdateAuth">用户权限管理</view>
+  </block>
+  <view class="menu-item">版本 {{version || '2.2.1'}}</view>
+</view>
+<role-info-popup wx:if="{{!loading}}" show="{{showPopup}}" validPeriods="{{validPeriods}}"></role-info-popup>
