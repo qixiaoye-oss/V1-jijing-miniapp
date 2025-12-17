@@ -1,23 +1,15 @@
-var api = require('../../../utils/api')
+const api = getApp().api
 const pageGuard = require('../../../behaviors/pageGuard')
-const pageLoading = require('../../../behaviors/pageLoading')
+const buttonGroupHeight = require('../../../behaviors/button-group-height')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
+  behaviors: [pageGuard.behavior, buttonGroupHeight],
   data: {
     checked: false
   },
   onReady() {
-    this.startLoading()
-    this.loadUserInfo()
-  },
-  loadUserInfo() {
-    const _this = this
-    api.request(this, '/user/v1/user/info', {}, true).then(() => {
-      _this.setDataReady()
-      _this.finishLoading()
-    }).catch(() => {
-      pageGuard.finishProgress(_this)
+    api.request(this, '/user/v1/user/info', {}, true).catch(() => {
+      // 新用户可能无数据，静默失败
     })
   },
   onChooseAvatar(e) {
@@ -25,12 +17,10 @@ Page({
       avatarUrl
     } = e.detail
     const _this = this
-    api.uploadFileToOSS(avatarUrl, 'user/avatar/', this).then(res => {
+    api.uploadFileToOSS(avatarUrl, '/head/', this).then(res => {
       _this.setData({
         [`user.headUrl`]: res
       })
-    }).catch(() => {
-      // 上传失败，已在 api 中 toast
     })
   },
   formSubmit(e) {
@@ -54,14 +44,13 @@ Page({
     _this.updateUser(headUrl, nickName);
   },
   updateUser(headUrl, nickName) {
-    const _this = this
     api.request(this, '/user/v1/user/update', {
       nickName: nickName,
       avatarUrl: headUrl
     }, true, "POST").then(res => {
-      _this.navigateBack()
+      this.navigateBack()
     }).catch(() => {
-      // 更新失败，已在 api 中 toast
+      // 保存失败仅提示，保留表单数据
     })
   }
 })

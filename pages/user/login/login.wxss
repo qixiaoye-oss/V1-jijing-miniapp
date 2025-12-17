@@ -1,11 +1,10 @@
-@import '/style/button-group.wxss';
-
+/* 页面内容区域 - 动态 padding-bottom 由 buttonGroupHeight behavior 计算 */
 .user-page {
   background: var(--theme-bcakground-color);
   border-radius: 9px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   padding: 15px;
   box-sizing: border-box;
 }
@@ -24,18 +23,18 @@
 }
 
 .user__avatar-button {
-  width: 80px !important;
-  height: 80px;
+  width: 81px !important;
+  height: 81px;
   border-radius: 50%;
   border-color: transparent;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.user__avatar-button::after {
+  border: none;
 }
 
 .user__avatar {
-  flex-shrink: 0;
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -48,11 +47,22 @@
   width: 130px;
   line-height: 1.4;
   font-size: 16px;
-  border-radius: 3px;
-  margin-top: 5px;
+  border-radius: 6px;
 }
 
 .remind {
   font-size: 12px;
   color: rgba(0, 0, 0, 0.4);
+}
+
+/* 重置按钮组内button的默认样式 */
+.btn-group-single .btn-action {
+  border: none;
+  padding: 5px;
+  margin: 0;
+  line-height: inherit;
+}
+
+.btn-group-single .btn-action::after {
+  border: none;
 }
