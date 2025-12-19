@@ -12,6 +12,6 @@
   <block wx:if="{{user.isManager == 1}}">
     <view class="menu-item" bind:tap="toUpdateAuth">用户权限管理</view>
   </block>
-  <view class="menu-item">版本 <text class="menu-item__value">{{version_number || '2.2.1'}}</text></view>
+  <view class="menu-item">版本 <text class="menu-item__value">{{version_number || '1.0.2'}}</text></view>
 </view>
 <role-info-popup wx:if="{{!loading}}" show="{{showPopup}}" validPeriods="{{validPeriods}}"></role-info-popup>
