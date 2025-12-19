@@ -9,7 +9,8 @@
  * --skeleton-radius: 圆角大小（默认 6px）
  * --skeleton-card-bg: 卡片/容器背景色（默认 #fff）
  * --skeleton-border-color: 边框颜色（默认 #eee）
- * --skeleton-item-gap: 列表项间距（默认 15px）
+ * --skeleton-container-padding: 容器内边距/视窗边缘间距（默认 20px）
+ * --skeleton-item-gap: 卡片间距（默认 15px）
  */
 
 /* ============================================================
@@ -94,7 +95,7 @@
    ============================================================ */
 
 .skeleton-list {
-  padding: 0;
+  padding: var(--skeleton-container-padding, 20px);
 }
 
 .skeleton-list__item {
@@ -105,6 +106,10 @@
   background: var(--skeleton-card-bg, #fff);
   border-radius: var(--skeleton-radius, 9px);
   border: 1px solid var(--skeleton-border-color, #eee);
+}
+
+.skeleton-list__item:last-child {
+  margin-bottom: 0;
 }
 
 .skeleton-list__avatar {
@@ -153,12 +158,12 @@
 .skeleton-card {
   display: flex;
   flex-wrap: wrap;
-  padding: 0;
-  gap: 10px;
+  padding: var(--skeleton-container-padding, 20px);
+  gap: var(--skeleton-item-gap, 15px);
 }
 
 .skeleton-card__item {
-  width: calc(50% - 5px);
+  width: calc(50% - 7.5px);
   padding: 15px;
   background: var(--skeleton-card-bg, #fff);
   border-radius: var(--skeleton-radius, 6px);
@@ -197,15 +202,19 @@
    ============================================================ */
 
 .skeleton-detail {
-  padding: 0;
+  padding: var(--skeleton-container-padding, 20px);
 }
 
 .skeleton-detail__section {
   padding: 15px;
-  margin-bottom: 15px;
+  margin-bottom: var(--skeleton-item-gap, 15px);
   background: var(--skeleton-card-bg, #fff);
   border-radius: var(--skeleton-radius, 9px);
   border: 1px solid var(--skeleton-border-color, #eee);
+}
+
+.skeleton-detail__section:last-child {
+  margin-bottom: 0;
 }
 
 .skeleton-detail__header {
@@ -244,7 +253,7 @@
    ============================================================ */
 
 .skeleton-sentence {
-  padding: 0;
+  padding: var(--skeleton-container-padding, 20px);
 }
 
 .skeleton-sentence__item {
@@ -253,6 +262,10 @@
   background: var(--skeleton-card-bg, #fff);
   border-radius: var(--skeleton-radius, 9px);
   border: 1px solid var(--skeleton-border-color, #eee);
+}
+
+.skeleton-sentence__item:last-child {
+  margin-bottom: 0;
 }
 
 .skeleton-sentence__header {
@@ -312,7 +325,7 @@
    ============================================================ */
 
 .skeleton-user {
-  padding: 0;
+  padding: var(--skeleton-container-padding, 20px);
 }
 
 .skeleton-user__header {
