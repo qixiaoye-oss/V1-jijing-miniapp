@@ -9,7 +9,7 @@
       <image class="sub-item__title--icon" wx:if="{{item.iconUrl}}" src="{{item.iconUrl}}" />
       <view class="sub-item__title--text" wx:if="{{item.name}}">{{item.name}}</view>
     </view>
-    <view class="tag tag__multi tag__multi--orange">
+    <view class="tag tag__multi {{item.reviewCount == 0 ? 'tag__multi--red' : 'tag__multi--green'}}">
       <view>复习{{item.reviewCount}}次</view>
       <view class="tag__intervals"></view>
       <view>最近{{item.reviewDate}}天</view>
