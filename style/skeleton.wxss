@@ -9,8 +9,9 @@
  * --skeleton-radius: 圆角大小（默认 6px）
  * --skeleton-card-bg: 卡片/容器背景色（默认 #fff）
  * --skeleton-border-color: 边框颜色（默认 #eee）
- * --skeleton-container-padding: 容器内边距/视窗边缘间距（默认 20px）
  * --skeleton-item-gap: 卡片间距（默认 15px）
+ *
+ * 注意：页面视窗边缘间距由全局 page { padding: 20px } 控制（见 app.wxss）
  */
 
 /* ============================================================
@@ -95,7 +96,7 @@
    ============================================================ */
 
 .skeleton-list {
-  padding: var(--skeleton-container-padding, 20px);
+  padding: 0;
 }
 
 .skeleton-list__item {
@@ -158,7 +159,7 @@
 .skeleton-card {
   display: flex;
   flex-wrap: wrap;
-  padding: var(--skeleton-container-padding, 20px);
+  padding: 0;
   gap: var(--skeleton-item-gap, 15px);
 }
 
@@ -202,7 +203,7 @@
    ============================================================ */
 
 .skeleton-detail {
-  padding: var(--skeleton-container-padding, 20px);
+  padding: 0;
 }
 
 .skeleton-detail__section {
@@ -253,7 +254,7 @@
    ============================================================ */
 
 .skeleton-sentence {
-  padding: var(--skeleton-container-padding, 20px);
+  padding: 0;
 }
 
 .skeleton-sentence__item {
@@ -325,7 +326,7 @@
    ============================================================ */
 
 .skeleton-user {
-  padding: var(--skeleton-container-padding, 20px);
+  padding: 0;
 }
 
 .skeleton-user__header {
