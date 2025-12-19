@@ -10,11 +10,8 @@
 <view class="btn-page-bottom" wx:if="{{!loading}}">
   <view class="btn-group-single">
     <tap-action icon="flag" class="{{shaking?'btn--shake':''}}" bind:tap="useful">
-      <image src="/images/v2/heart_bt.png" class="img_flag"></image>
-      <view>
-        <text>有用</text>
-        <text wx:if="{{usefulCount > 0}}">+{{usefulCount}}</text>
-      </view>
+      <view>有用<text wx:if="{{usefulCount > 0}}"> +{{usefulCount}}</text></view>
+      <image src="/images/v2/heart_bt.png"></image>
     </tap-action>
   </view>
 </view>
