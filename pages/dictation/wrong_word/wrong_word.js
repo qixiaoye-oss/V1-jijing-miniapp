@@ -126,7 +126,16 @@ Page({
       api.request(this, '/keyVocabulary/reviewRecord', {
         id: this.options.id
       }, false).then(res => {
-        api.toast("打卡成功")
+        // 获取页面栈，刷新上一页数据
+        const pages = getCurrentPages()
+        if (pages.length >= 2) {
+          const prevPage = pages[pages.length - 2]
+          if (prevPage && typeof prevPage.loadData === 'function') {
+            prevPage.loadData()
+          }
+        }
+        // 返回上一页
+        wx.navigateBack()
       })
     })
   },
