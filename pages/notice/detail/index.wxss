@@ -20,8 +20,3 @@ page {
   border: 1px solid var(--dashed-border-color);
   border-radius: 9px;
 }
-
-.btn-action image {
-  margin-left: 0;
-  margin-right: var(--button-icon-margin);
-}
