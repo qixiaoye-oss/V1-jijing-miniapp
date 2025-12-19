@@ -17,7 +17,7 @@ Page({
       avatarUrl
     } = e.detail
     const _this = this
-    api.uploadFileToOSS(avatarUrl, '/head/', this).then(res => {
+    api.uploadFileToOSS(avatarUrl, 'user/avatar/', this).then(res => {
       _this.setData({
         [`user.headUrl`]: res
       })
