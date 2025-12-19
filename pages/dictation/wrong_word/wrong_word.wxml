@@ -41,7 +41,7 @@
   </view>
   <view class="no-data" wx:if="{{wordList.length == 0}}">暂无数据</view>
 </view>
-<view class="btn-page-bottom" wx:if="{{_isDataReady}}">
+<view class="btn-page-bottom" wx:if="{{!loading}}">
   <view class="btn-group-single">
     <tap-action icon="correct" bind:tap="review">
       <view>打卡</view>
