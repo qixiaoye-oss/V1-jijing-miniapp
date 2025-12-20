@@ -1,7 +1,7 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <skeleton type="detail" loading="{{loading}}" rows="{{3}}" />
-<view class="notice" wx:if="{{!loading}}" style="padding-bottom: var(--button-group-total-height-single)">
+<view class="notice" wx:if="{{!loading}}">
   <view class="notice__title">{{title}}</view>
   <view class="notice__content">
     <rich-text nodes="{{content}}"></rich-text>
