@@ -6,7 +6,7 @@
 > 通过 `@import` 引入样式后，直接在 wxml 中使用 CSS 类名即可。
 > 推荐配合 `tap-action` 组件使用，自动封装点击动效。
 
-**版本：** v4.0.0
+**版本：** v4.1.0
 **更新日期：** 2025-12-20
 
 ---
@@ -20,6 +20,7 @@
 | 样式文件 | v4.0.0 | `style/button-group.wxss` |
 | 点击组件 | v4.0.0 | `components/tap-action/` |
 | 高度计算 | v4.0.0 | `behaviors/button-group-height.js` |
+| 本文档 | v4.1.0 | `docs/button-group.md` |
 
 ### 1.2 快速引入
 
@@ -390,40 +391,53 @@ hint_banner 使用与按钮相同的 icon 颜色映射（参考 4.2），但**�
 └─────────────────────────────┘
 ```
 
-### 9.2 Behavior 使用
+### 9.2 布局模式选择
 
-```javascript
-const buttonGroupHeight = require('../../behaviors/button-group-height')
+根据**按钮组高度是否动态变化**选择实现方案：
 
-Page({
-  behaviors: [buttonGroupHeight],
-
-  onDataReady() {
-    // 数据就绪后重新计算按钮组高度
-    this.updateButtonGroupHeight()
-  }
-})
+```
+按钮组高度是否动态变化？
+│
+├─ 否（固定）→ 纯 CSS 方案（9.3）
+│              不需要 Behavior，使用 CSS 变量
+│
+└─ 是（动态）→ Behavior 方案（9.4）
+               │
+               ├─ 页面级滚动 → buttonGroupHeight
+               │
+               └─ 固定内容区域 → contentAreaHeight
 ```
 
-**Behavior 提供的数据：**
+**动态高度的触发条件：**
+- hint_banner 动态显示/隐藏
+- hint_banner 内容变化（行数变化）
+- 按钮数量动态变化
 
-| 数据字段 | 类型 | 默认值 | 说明 |
-|----------|------|--------|------|
-| `buttonGroupHeight` | Number | 0 | 按钮组总高度（元素高度 + 20px + 15px） |
-| `contentAreaHeight` | Number | 0 | 内容区域可用高度 |
+**选择参考：**
 
-**默认值与 CSS Fallback：**
+| 页面特征 | 方案 | 示例页面 |
+|----------|------|----------|
+| 简单列表/详情页，按钮组固定 | 纯 CSS | result_list, notice/detail |
+| 有动态 hint_banner | Behavior | word_dictation, spot_dictation |
+| 有 swiper/固定头部 | Behavior | wrong_exam |
 
-- `buttonGroupHeight` 默认值为 `0`，让 CSS 变量作为初始 fallback
-- Behavior 通过 `boundingClientRect()` 测量实际 DOM 高度，计算完成后替换为精确值
-- 这种设计让 Behavior 能动态适应所有场景（单层/双层、有无 hint_banner、任意行数）
+### 9.3 纯 CSS 方案（固定高度）
 
-### 9.3 页面级滚动
+适用于按钮组高度固定不变的页面，**不需要引入 Behavior**。
 
-适用于内容可滚动的详情页面：
+**方式一：WXSS 设置 page padding-bottom（推荐）**
+
+```css
+/* 页面.wxss */
+page {
+  padding-bottom: var(--button-group-total-height-single);  /* 单层 102px */
+  /* 或 var(--button-group-total-height) 双层 168px */
+}
+```
 
 ```xml
-<view class="page-content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height)'}}">
+<!-- 页面.wxml - 无需额外处理 -->
+<view class="content">
   <!-- 页面内容 -->
 </view>
 
@@ -434,21 +448,87 @@ Page({
 </view>
 ```
 
-### 9.4 固定内容区域
+**方式二：WXML inline style**
 
-适用于内容区域固定、不随页面滚动的场景：
+适用于 WXSS 中不便设置 page 样式的情况：
 
 ```xml
-<view class="page-wrapper" style="height: {{contentAreaHeight ? contentAreaHeight + 'px' : 'calc(100vh - var(--button-group-total-height-with-hint))'}}">
-  <scroll-view scroll-y class="body">
-    <!-- 可滚动内容 -->
-  </scroll-view>
+<view class="content" style="padding-bottom: var(--button-group-total-height-single)">
+  <!-- 页面内容 -->
+</view>
+```
+
+> **注意**：不要同时使用两种方式，会导致双重间距。
+
+### 9.4 Behavior 方案（动态高度）
+
+适用于按钮组高度可能变化的页面，**需要引入 Behavior**。
+
+**基础用法：**
+
+```javascript
+const buttonGroupHeight = require('../../behaviors/button-group-height')
+
+Page({
+  behaviors: [buttonGroupHeight],
+
+  onDataReady() {
+    // 数据就绪后重新计算
+    this.updateButtonGroupHeight()
+  },
+
+  toggleHint() {
+    this.setData({ showHint: !this.data.showHint })
+    // hint_banner 变化后重新计算
+    this.updateButtonGroupHeight()
+  }
+})
+```
+
+**Behavior 提供的数据：**
+
+| 数据字段 | 类型 | 默认值 | 说明 |
+|----------|------|--------|------|
+| `buttonGroupHeight` | Number | 0 | 按钮组总高度（元素高度 + 20px + 15px） |
+| `contentAreaHeight` | Number | 0 | 内容区域可用高度（视口 - header - 按钮组） |
+
+**场景一：页面级滚动 + 动态高度**
+
+内容随页面滚动，用 `buttonGroupHeight` 设置 padding-bottom：
+
+```xml
+<view class="content" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height-single)'}}">
+  <!-- 页面滚动内容 -->
 </view>
 
 <view class="btn-page-bottom">
-  <!-- 按钮组 -->
+  <view class="btn-group-hint-banner" wx:if="{{showHint}}">动态提示</view>
+  <view class="btn-group-single">...</view>
 </view>
 ```
+
+**场景二：固定内容区域 + 动态高度**
+
+内容区域固定高度，内部有 scroll-view 或 swiper，用 `contentAreaHeight` 设置高度：
+
+```xml
+<view class="header_container">...</view>
+
+<view class="content-area" style="height: {{contentAreaHeight ? contentAreaHeight + 'px' : 'calc(100vh - var(--button-group-total-height-with-hint))'}}; flex: none">
+  <swiper><!-- 或 scroll-view --></swiper>
+</view>
+
+<view class="btn-page-bottom">
+  <view class="btn-group-hint-banner" wx:if="{{showHint}}">动态提示</view>
+  <view class="btn-group-split">...</view>
+</view>
+```
+
+**CSS Fallback 说明：**
+
+- `buttonGroupHeight` / `contentAreaHeight` 默认值为 `0`
+- 使用三元表达式提供 CSS 变量作为初始 fallback
+- Behavior 计算完成后替换为精确值
 
 ### 9.5 header_container 处理
 
@@ -659,6 +739,15 @@ page {
 
 ## 十三、更新记录
 
+### v4.1.0 (2025-12-20)
+- **重构第九章「页面布局与高度计算」**：
+  - 新增 9.2「布局模式选择」：明确决策逻辑和选择标准
+  - 重写 9.3「纯 CSS 方案」：固定高度场景，不需要 Behavior
+  - 重写 9.4「Behavior 方案」：动态高度场景，整合原 9.2/9.3/9.4
+  - 新增决策树图示和示例页面参考
+- **核心约定**：按钮组高度是否动态变化决定是否需要 Behavior
+- **修复**：原 9.3 示例暗示所有页面都需要 Behavior 的误导
+
 ### v4.0.0 (2025-12-20)
 - **文档整合重构**：
   - 重新组织章节结构，从 10 章整理为 13 章
@@ -698,6 +787,6 @@ page {
 
 ---
 
-**文档版本：** v4.0.0
+**文档版本：** v4.1.0
 **最后更新：** 2025-12-20
 **维护者：** 开发团队
