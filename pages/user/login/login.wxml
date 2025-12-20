@@ -1,4 +1,4 @@
-<form bindsubmit="formSubmit" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : ''}}">
+<form bindsubmit="formSubmit" style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height-single)'}}">
   <view class="user-page">
     <view class="user-info">
       <button class="user__avatar-button" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" hover-class="tap-active">
