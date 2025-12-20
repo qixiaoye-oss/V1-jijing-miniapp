@@ -1,7 +1,8 @@
 /**
  * 通用点击动效组件，封装点击反馈效果
- * @version 2.1.0
- * @date 2025-12-11
+ * @version 4.0.0
+ * @date 2025-12-20
+ * @see docs/button-group.md 第三章
  */
 Component({
   options: {

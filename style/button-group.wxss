@@ -1,18 +1,19 @@
 /**
  * 按钮组样式 (Button Group Style)
- * @version 3.1.1
- * @date 2025-12-15
+ * @version 4.0.0
+ * @date 2025-12-20
  * @description 按钮组件的CSS样式文件，用于管理按钮组、按钮等元素的样式。支持多种按钮类型、位置和状态，包括导入使用说明。
- * @note 查看本文件的CSS样式使用说明，可参考 docs/button-group-style-guide.md
+ * @note 查看本文件的CSS样式使用说明，可参考 docs/button-group.md
  *
  * @changelog
+ *   v4.0.0 (2025-12-20) - 文档整合重构，版本号统一
+ *   v3.4.0 (2025-12-20) - Behavior 默认值改为 0，CSS 变量作为 fallback
  *   v3.1.1 (2025-12-15) - 优化角标定位：使用 translate(50%, -50%) 替代固定像素偏移
  *   v3.1.0 (2025-12-14) - 简化布局类名：btn-group-layout-* → btn-group-*
  *   v3.0.0 (2025-12-14) - 新增 hint_banner 提示横幅功能，支持通过 data-icon 指定颜色
  *   v2.2.0 (2025-12-13) - 角标样式改为 padding 自适应尺寸
  *   v2.1.0 (2025-12-11) - 新增角标颜色自动继承 data-icon 主色
  *   v2.0.0 (2025-12-10) - 完全迁移自参考项目，新增 btn-pos-* 位置类、data-icon 颜色映射、tap-action 组件支持
- *   v1.6.0 (2025-12-05) - 完全对齐参考项目架构
  *
  * @features
  *   - 纯 CSS 实现，无需 js/json/wxml 文件

@@ -1,22 +1,27 @@
 /**
  * 按钮组高度动态计算 Behavior
+ * @version 4.0.0
+ * @date 2025-12-20
+ * @see docs/button-group.md 第九章
  *
  * 功能：
  * - 自动计算 .btn-page-bottom 的实际高度
  * - 动态更新页面内容区域的可用高度
  * - 支持 hint_banner 动态显示/隐藏时重新计算
+ * - 支持 .header_container 高度计算（可选）
  *
  * 使用方式：
  * 1. 在页面 JS 中引入: const buttonGroupHeight = require('../../behaviors/button-group-height')
  * 2. 添加到 behaviors: behaviors: [buttonGroupHeight]
- * 3. 在 WXML 中使用: height: calc(100vh - {{buttonGroupHeight}}px)
+ * 3. 在 WXML 中使用: style="padding-bottom: {{buttonGroupHeight ? buttonGroupHeight + 'px' : 'var(--button-group-total-height)'}}"
  * 4. 当 hint_banner 变化时调用: this.updateButtonGroupHeight()
  */
 
 module.exports = Behavior({
   data: {
-    // 按钮组总高度（包含 bottom-distance 和 gap）
-    buttonGroupHeight: 168, // 默认值：两层结构无 hint_banner
+    // 按钮组总高度（包含 bottom-distance + gap）
+    // 默认值 0：让 CSS 变量作为初始 fallback，behavior 计算完成后替换为精确值
+    buttonGroupHeight: 0,
     // 内容区域可用高度
     contentAreaHeight: 0,
   },
