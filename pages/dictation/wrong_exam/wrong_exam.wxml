@@ -8,7 +8,7 @@
       <progress-bar current="{{idx + 1}}" total="{{list.length}}" />
     </view>
   </view>
-  <view class="middle_of_adaptive flex_row">
+  <view class="middle_of_adaptive flex_row" style="height: {{contentAreaHeight ? contentAreaHeight + 'px' : 'calc(100vh - var(--button-group-total-height))'}}; flex: none">
     <!-- <view class="swiper_mask"></view> -->
     <swiper class="swiper_container" previous-margin="30px" next-margin="30px" bindchange='swiperSwitch' current='{{swiperCurrent}}'>
       <swiper-item class="swiper_item_container" wx:for="{{list}}" wx:key="item" wx:for-item="group" wx:for-index="groupIndex">
