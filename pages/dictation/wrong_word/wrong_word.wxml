@@ -2,7 +2,7 @@
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <skeleton type="sentence" loading="{{loading}}" rows="{{5}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
-<view class="base_page layout_grid" wx:if="{{!loading}}">
+<view class="base_page layout_grid" wx:if="{{!loading}}" style="padding-bottom: var(--button-group-total-height-single)">
   <view wx:for="{{wordList}}" wx:key="item" class="question_container">
     <view class="user_choice_cell">
       <block wx:if="{{item.operationType === '1'}}">
