@@ -15,8 +15,9 @@
 
 module.exports = Behavior({
   data: {
-    // 按钮组总高度（包含 bottom-distance 和 gap）
-    buttonGroupHeight: 168, // 默认值：两层结构无 hint_banner
+    // 按钮组总高度（包含 bottom-distance + gap）
+    // 默认值 0：让 CSS 变量作为初始 fallback，behavior 计算完成后替换为精确值
+    buttonGroupHeight: 0,
     // 内容区域可用高度
     contentAreaHeight: 0,
   },

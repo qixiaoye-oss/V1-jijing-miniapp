@@ -6,8 +6,8 @@
 > 通过 `@import` 引入样式后，直接在 wxml 中使用 CSS 类名即可。
 > 推荐配合 `tap-action` 组件使用，自动封装点击动效。
 
-**版本：** v3.3.2
-**更新日期：** 2025-12-17
+**版本：** v3.4.0
+**更新日期：** 2025-12-20
 **样式文件：** `style/button-group.wxss`
 **点击组件：** `components/tap-action`
 
@@ -590,12 +590,21 @@ getDetail(isPull) {
 
 **Behavior 提供的数据：**
 
-| 数据字段 | 类型 | 说明 |
-|----------|------|------|
-| `buttonGroupHeight` | Number | 按钮组总高度（元素高度 + bottom-distance 20px + gap 15px） |
-| `contentAreaHeight` | Number | 内容区域可用高度（视口高度 - buttonGroupHeight） |
+| 数据字段 | 类型 | 默认值 | 说明 |
+|----------|------|--------|------|
+| `buttonGroupHeight` | Number | 0 | 按钮组总高度（元素高度 + bottom-distance 20px + gap 15px） |
+| `contentAreaHeight` | Number | 0 | 内容区域可用高度（视口高度 - buttonGroupHeight） |
 
-> **注意**：本项目的 Behavior 计算包含 15px gap，与参考项目略有差异。
+**默认值与 CSS Fallback（v3.3.0）：**
+
+- `buttonGroupHeight` 默认值为 `0`，让 CSS 变量作为初始 fallback
+- Behavior 通过 `boundingClientRect()` 测量实际 DOM 高度，计算完成后替换为精确值
+- 这种设计让 Behavior 能动态适应所有场景：
+  - 单层 / 双层结构
+  - 有 / 无 hint_banner
+  - hint_banner 任意行数（1行、2行、3行...N行）
+
+> **注意：** `buttonGroupHeight` 已包含 15px gap，页面 CSS 直接使用变量即可，无需额外加 15px。
 
 ---
 
@@ -777,7 +786,10 @@ page {
 | `--button-group-total-height-with-hint` | 227.2px | 两层 + hint双行 |
 | `--button-group-total-height-single-with-hint` | 141.6px | 单层 + hint单行 |
 
-> **注意：** 本项目高度计算包含 15px gap（蒙版B区域），与参考项目不同。
+> **注意：**
+> - 以上高度已包含 15px gap（蒙版B渐变区域），页面直接使用变量即可，无需额外计算
+> - CSS 变量仅覆盖常见场景（hint 单行/双行），作为初始 fallback 使用
+> - Behavior 动态计算能适应任意行数的 hint_banner，是最终的精确值来源
 
 ---
 
@@ -939,6 +951,17 @@ this.getButtonGroupHeightDetail().then(detail => {
 
 ## 十、更新记录
 
+### v3.4.0 (2025-12-20)
+- **Behavior 默认值改为 0**：让 CSS 变量作为初始 fallback
+  - `buttonGroupHeight` 默认值从 `168` 改为 `0`
+  - Behavior 通过 `boundingClientRect()` 测量实际 DOM 高度，计算完成后替换为精确值
+  - 这种设计让 Behavior 能动态适应所有场景（单层/双层、有无 hint_banner、hint_banner 任意行数）
+- **更新文档**：
+  - 7.5.2 Behavior 数据表新增"默认值"列
+  - 7.5.2 新增"默认值与 CSS Fallback（v3.3.0）"说明段落
+  - 7.5.6 CSS 变量注意补充 fallback 定位说明
+- **同步参考项目**：对齐 1204-ielts-speaking-miniapp v3.3.0 的 Behavior 设计理念
+
 ### v3.3.2 (2025-12-17)
 - **新增实施检查清单**：滚动布局页面实施前的必查项目
   - 全局 page padding-bottom 检查与覆盖
@@ -1028,6 +1051,6 @@ this.getButtonGroupHeightDetail().then(detail => {
 
 ---
 
-**文档版本：** v3.3.2
-**最后更新：** 2025-12-17
+**文档版本：** v3.4.0
+**最后更新：** 2025-12-20
 **维护者：** 开发团队
