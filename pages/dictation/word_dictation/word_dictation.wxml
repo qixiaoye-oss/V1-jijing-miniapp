@@ -3,10 +3,8 @@
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <template is="audioLoading" data="{{audioDownProgress}}" />
 <view class="page" wx:if="{{list.length > 0}}">
-  <view class="header_container flex_row_cen font_color_base">
-    <view class="progress_bar_base">
-      <progress-bar current="{{wordCurrent + 1}}" total="{{list.length}}" />
-    </view>
+  <view class="header_container">
+    <progress-bar current="{{wordCurrent + 1}}" total="{{list.length}}" />
   </view>
   <view class="middle_of_adaptive flex_row" style="height: {{contentAreaHeight ? contentAreaHeight + 'px' : 'calc(100vh - var(--button-group-total-height-with-hint))'}}; flex: none">
     <swiper class="swiper_container" previous-margin="30px" next-margin="30px" bindchange='swiperSwitch' current='{{swiperCurrent}}'>

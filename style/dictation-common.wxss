@@ -30,39 +30,13 @@ text {
 /* ==================== 2. 顶部进度条区域 ==================== */
 
 .header_container {
+  flex-shrink: 0;
   font-size: 15px;
   width: 100%;
-  display: flex;
-  align-items: flex-start;
   padding: 20px 20px 0 20px;
   box-sizing: border-box;
 }
 
-.progress_bar_base {
-  width: 94%;
-  display: flex;
-  flex-direction: column;
-}
-
-.progress_bar_track {
-  background-color: var(--main-gray-color);
-  height: 4px;
-  width: 100%;
-  position: relative;
-}
-
-.progress_bar_bg {
-  background-color: var(--main-blue-color);
-  height: 4px;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.progress_bar_base > view:last-child {
-  margin-top: 5px;
-  color: var(--main-blue-color);
-}
 
 /* ==================== 3. 中间内容区域 ==================== */
 
