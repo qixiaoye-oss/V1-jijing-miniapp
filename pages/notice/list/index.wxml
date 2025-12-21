@@ -18,7 +18,7 @@
               <text>{{chapter.title}}</text>
             </view>
           </view>
-          <view class="tag tag__multi--orange" style="margin-left: auto;" wx:if="{{chapter.description}}">{{chapter.description}}</view>
+          <view class="tag tag__multi tag__multi--orange" style="margin-left: auto;" wx:if="{{chapter.description}}">{{chapter.description}}</view>
         </view>
       </view>
     </block>

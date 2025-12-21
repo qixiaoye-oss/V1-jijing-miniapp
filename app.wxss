@@ -2,6 +2,7 @@
 @import "style/layout.wxss";
 @import "style/theme.wxss";
 @import "style/button-group.wxss";
+@import "style/tag.wxss";
 @import "style/default-styles.wxss";
 @import "style/page-loading.wxss";
 @import "style/audio-loading.wxss";
