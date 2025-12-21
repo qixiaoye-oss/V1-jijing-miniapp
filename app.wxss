@@ -43,7 +43,20 @@ page {
   --dashed-border-color: rgba(0, 0, 0, 0.3);
   /* 练习页主要颜色 */
   --question-color: rgba(0, 166, 237, 1);
-  --question-bcakground-color: rgba(0, 166, 237, 0.15)
+  --question-bcakground-color: rgba(0, 166, 237, 0.15);
+
+  /* ===== 统一主色定义 ===== */
+  --main-gray-color: rgba(0, 0, 0, 0.3);
+  --main-green-color: #00D26A;
+  --main-blue-color: #00A6ED;
+  --main-red-color: #F92F60;
+  --main-orange-color: #FFB02E;
+
+  /* ===== 主色半透明背景（15%不透明度）===== */
+  --main-blue-color-bg: rgba(0, 166, 237, 0.15);
+  --main-green-color-bg: rgba(0, 210, 106, 0.15);
+  --main-red-color-bg: rgba(249, 47, 96, 0.15);
+  --main-orange-color-bg: rgba(255, 176, 46, 0.15);
 }
 
 view {
