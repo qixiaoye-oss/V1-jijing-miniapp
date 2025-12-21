@@ -32,16 +32,6 @@ text {
   align-items: flex-start;
 }
 
-.progress_bar_base {
-  background-color: #d7d7d7;
-  height: 4px;
-  width: 94%;
-}
-
-.progress_bar_bg {
-  background-color: var(--main-blue-color);
-  height: 4px;
-}
 
 .middle_of_adaptive {
   flex-grow: 1;
