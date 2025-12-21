@@ -131,7 +131,7 @@
   text-overflow: ellipsis;
   position: relative;
   word-wrap: break-word;
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--main-gray-color);
 }
 
 .home-card--notice .home-card__body-title {
@@ -140,11 +140,11 @@
 }
 
 .home-card--notice .home-card__body-separator {
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--main-gray-color);
 }
 
 .home-card--notice .home-card__body-desc {
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--main-gray-color);
 }
 
 .home-card--notice .home-card__meta {

@@ -41,7 +41,7 @@ page {
 
 /* 按钮组模式 3：间隔线） */
 .btn-group-layout-tripartite__divider {
-  color: #FFB02D;
+  color: var(--main-orange-color);
 }
 
 /* 变体：标签按钮（带边框） */

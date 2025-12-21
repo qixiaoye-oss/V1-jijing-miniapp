@@ -19,7 +19,7 @@
   font-size: 22px;
   font-weight: bold;
   margin-right: 10px;
-  color: #00A6ED;
+  color: var(--main-blue-color);
 }
 
 .word_translate {

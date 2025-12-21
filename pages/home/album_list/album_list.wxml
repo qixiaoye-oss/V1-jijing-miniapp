@@ -15,8 +15,8 @@
           <text>{{chapter.name}}</text>
         </view>
       </view>
-      <view class="tag--right tag tag--transparent" style="color: {{chapter.colorRgb}};border-color: {{chapter.colorRgb}};">{{chapter.childCount}}篇专项</view>
-      <view class="tag tag--transparent" style="color: {{chapter.colorRgb}};border-color: {{chapter.colorRgb}};">完成{{chapter.completed}}</view>
+      <view class="tag tag--right tag--dynamic-outline" style="--tag-color: {{chapter.colorRgb}};">{{chapter.childCount}}篇专项</view>
+      <view class="tag tag--dynamic-outline" style="--tag-color: {{chapter.colorRgb}};">完成{{chapter.completed}}</view>
     </view>
   </block>
 </view>

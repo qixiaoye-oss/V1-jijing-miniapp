@@ -29,7 +29,7 @@ page {
 
 .reference_answer_cell {
   font-size: 18px;
-  color: #00A6ED;
+  color: var(--main-blue-color);
   font-weight: bold;
   margin-top: 10px;
   display: flex;

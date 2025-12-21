@@ -52,8 +52,8 @@
                   <view class="home-card__title">{{subject.name}}</view>
                 </view>
                 <view class="home-card__footer">
-                  <view class="tag tag--transparent" style="color:{{group.colorRgb}};border-color:{{group.colorRgb}}">{{subject.childTotal}}</view>
-                  <view class="tag tag--orange" style="background:{{group.colorRgb}}" wx:if="{{subject.tag}}">{{subject.tag}}</view>
+                  <view class="tag tag--dynamic-outline" style="--tag-color:{{group.colorRgb}}">{{subject.childTotal}}</view>
+                  <view class="tag tag--dynamic-solid" style="--tag-color:{{group.colorRgb}}" wx:if="{{subject.tag}}">{{subject.tag}}</view>
                 </view>
               </view>
             </view>
