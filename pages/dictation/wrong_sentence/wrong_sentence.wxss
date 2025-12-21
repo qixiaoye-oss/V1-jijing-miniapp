@@ -34,7 +34,7 @@
 }
 
 .litening_footer {
-  color: #00A6ED;
+  color: var(--main-blue-color);
 }
 
 .play {
@@ -61,6 +61,6 @@
 }
 
 .select {
-  border: 1px solid #00A6ED;
+  border: 1px solid var(--main-blue-color);
 }
 

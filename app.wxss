@@ -148,7 +148,7 @@ view {
 }
 
 .font_color_base {
-  color: #00A6ED;
+  color: var(--main-blue-color);
 }
 
 .font_color_grey {
@@ -171,23 +171,23 @@ view {
 }
 
 .bg_3478F6 {
-  background-color: #00A6ED;
+  background-color: var(--main-blue-color);
 }
 
 .bg_f7f6fB_bor {
   background-color: #ffffff;
-  border: 1px solid #00A6ED;
+  border: 1px solid var(--main-blue-color);
   border-radius: 9px;
 }
 
 .bor_3478F6_bg_fff {
   border-radius: 9px;
-  border: 1px solid #00A6ED;
+  border: 1px solid var(--main-blue-color);
   background-color: #fff;
 }
 
 .bor_3478f6 {
-  border: 1px solid #00A6ED;
+  border: 1px solid var(--main-blue-color);
   border-radius: 9px;
 }
 
@@ -260,17 +260,9 @@ wx-slider .wx-slider-handle-wrapper {
   overflow: hidden;
 }
 
-.complete {
-  position: absolute;
-  height: 25px;
-  left: 0;
-  background: rgba(0, 166, 237, 0.2);
-  z-index: 0;
-}
-
 .subtitle_completed {
-  border: 1px solid #00D26A;
-  background: #00D26A;
+  border: 1px solid var(--main-green-color);
+  background: var(--main-green-color);
   color: #ffffff;
   border-radius: 9px;
   padding-right: 26px !important;
@@ -335,7 +327,7 @@ wx-slider .wx-slider-handle-wrapper {
   background-color: #f2f2f2;
   padding: 4px 0;
   margin-right: 5px;
-  border-left: 3px solid #00A6ED;
+  border-left: 3px solid var(--main-blue-color);
   position: relative;
   z-index: 3;
 }

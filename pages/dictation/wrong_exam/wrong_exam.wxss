@@ -39,7 +39,7 @@ text {
 }
 
 .progress_bar_bg {
-  background-color: #00A6ED;
+  background-color: var(--main-blue-color);
   height: 4px;
 }
 
@@ -107,7 +107,7 @@ text {
   height: 25px;
   padding: 4px 0;
   margin-right: 2px;
-  border-left: 3px solid #00A6ED;
+  border-left: 3px solid var(--main-blue-color);
   background-size: 50%;
   z-index: 3;
   position: relative;

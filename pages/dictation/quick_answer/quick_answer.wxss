@@ -13,7 +13,7 @@ page {
 /* ==================== 卡片内容区域 ==================== */
 
 .swiper_item_cell {
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--main-gray-color);
   border-radius: 9px;
   width: calc(100% - 20px);
   flex-grow: 1;

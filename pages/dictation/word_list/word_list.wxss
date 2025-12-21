@@ -32,11 +32,11 @@
   font-size: 22px;
   font-weight: bold;
   margin-right: 10px;
-  color: #00A6ED;
+  color: var(--main-blue-color);
 }
 
 .litening_footer {
-  color: #00A6ED;
+  color: var(--main-blue-color);
 }
 
 

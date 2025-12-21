@@ -20,7 +20,7 @@
   margin-right: 15px;
   margin-left: 15px;
   font-weight: bold;
-  color: #00A6ED;
+  color: var(--main-blue-color);
 }
 
 .status_cell {
@@ -62,7 +62,7 @@
 }
 
 .wx-switch-input::before {
-  background: #00D26A !important;
+  background: var(--main-green-color) !important;
 }
 
 .btn-group-single {

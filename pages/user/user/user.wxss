@@ -50,5 +50,5 @@
 }
 
 .menu-item__value {
-  color: #00A6ED;
+  color: var(--main-blue-color);
 }

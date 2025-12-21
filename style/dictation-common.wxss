@@ -45,14 +45,14 @@ text {
 }
 
 .progress_bar_track {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--main-gray-color);
   height: 4px;
   width: 100%;
   position: relative;
 }
 
 .progress_bar_bg {
-  background-color: #00A6ED;
+  background-color: var(--main-blue-color);
   height: 4px;
   position: absolute;
   top: 0;
@@ -61,7 +61,7 @@ text {
 
 .progress_bar_base > view:last-child {
   margin-top: 5px;
-  color: #00A6ED;
+  color: var(--main-blue-color);
 }
 
 /* ==================== 3. 中间内容区域 ==================== */
