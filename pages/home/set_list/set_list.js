@@ -31,12 +31,13 @@ Page({
     url.push('/pages/dictation/spot_dictation/spot_dictation')
     list.push('句子版听写（机考）')
     url.push('/pages/dictation/spot_dictation/spot_dictation')
-    list.push('速刷版听写（纸笔）')
-    url.push('/pages/dictation/word_dictation/word_dictation')
-    list.push('速刷版听写（机考）')
-    url.push('/pages/dictation/word_dictation/word_dictation')
-    list.push('速刷版')
-    url.push('/pages/dictation/quick_answer/quick_answer')
+    // [暂时屏蔽] 以下三个入口用户使用频率极低
+    // list.push('速刷版听写（纸笔）')
+    // url.push('/pages/dictation/word_dictation/word_dictation')
+    // list.push('速刷版听写（机考）')
+    // url.push('/pages/dictation/word_dictation/word_dictation')
+    // list.push('速刷版')
+    // url.push('/pages/dictation/quick_answer/quick_answer')
     if (!api.isEmpty(item.exerciseId)) {
       list.push('成绩')
       url.push('/pages/dictation/result_list/result_list')
@@ -45,7 +46,7 @@ Page({
     wx.showActionSheet({
       itemList: list,
       success(res) {
-        if (res.tapIndex == 0 || res.tapIndex == 2) {
+        if (res.tapIndex == 0) { // 仅索引0为纸笔模式（屏蔽速刷版后索引已调整）
           param.mode = 'paper'
         }
         _this.navigateTo(url[res.tapIndex] + api.parseParams(param))
