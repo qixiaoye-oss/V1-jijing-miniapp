@@ -81,6 +81,10 @@
   max-width: 100%;
 }
 
+.tag view {
+  line-height: 1;
+}
+
 .tag__multi--red {
   border: 1px solid transparent;
   background: rgba(249, 47, 96, 0.15);
@@ -103,6 +107,12 @@
   border: 1px solid var(--main-gray-color);
   background: #ffffff;
   color: var(--main-gray-color);
+}
+
+.tag__multi--blue {
+  border: 1px solid transparent;
+  background: var(--main-blue-color-bg);
+  color: var(--main-blue-color);
 }
 
 /* ========== 分隔线 ========== */

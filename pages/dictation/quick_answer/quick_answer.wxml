@@ -37,7 +37,7 @@
                 </block>
                 <block wx:else>
                   <view class="close_open_cell flex_row_cen">
-                    <image class="close_open_img" src="/images/close_open.png"></image>
+                    <image class="close_open_img" src="/images/v2/hidden_bt.png"></image>
                   </view>
                 </block>
               </block>

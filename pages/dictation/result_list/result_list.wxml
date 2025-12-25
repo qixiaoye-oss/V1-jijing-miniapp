@@ -10,9 +10,9 @@
       <tap-action icon="correct" wx:if="{{item.status == 1}}">
         <image src="/images/v2/correct_bt.png"></image>
       </tap-action>
-      <view wx:else>
-        <!-- placeholder for wrong status -->
-      </view>
+      <tap-action icon="flag" wx:else>
+        <image src="/images/v2/wrong_bt.png"></image>
+      </tap-action>
       <tap-action icon="next" bind:tap="change" data-qid="{{item.questionId}}" data-sid="{{detail.setId}}" data-aid="{{detail.albumId}}" data-index="{{index + 1}}" data-length="{{detail.detail.length}}">
         <image src="/images/v2/next_bt.png"></image>
       </tap-action>
