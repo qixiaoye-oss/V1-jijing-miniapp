@@ -1,8 +1,8 @@
 # Tag 公用样式指南
 
-**版本**: 1.0.0
+**版本**: 1.1.0
 **文件**: `style/tag.wxss`
-**更新日期**: 2025-12-21
+**更新日期**: 2025-12-25
 
 ## 概述
 
@@ -17,6 +17,7 @@ page {
   --main-gray-color: rgba(0, 0, 0, 0.3);
   --main-green-color: #00D26A;
   --main-blue-color: #00A6ED;
+  --main-blue-color-bg: rgba(0, 166, 237, 0.15);
   --main-red-color: #F92F60;
   --main-orange-color: #FFB02E;
 }
@@ -68,6 +69,7 @@ page {
 | `.tag__multi--red` | 红色半透明底 |
 | `.tag__multi--orange` | 橙色半透明底 |
 | `.tag__multi--green` | 绿色半透明底 |
+| `.tag__multi--blue` | 蓝色半透明底 |
 | `.tag__multi--gray` | 灰色边框 + 白底 |
 | `.tag__intervals` | 分隔线（用于 multi 内部） |
 
@@ -138,6 +140,13 @@ page {
   <view class="tag__intervals"></view>
   <view>10/10</view>
 </view>
+
+<!-- 蓝色 -->
+<view class="tag tag__multi tag__multi--blue">
+  <view>P1</view>
+  <view class="tag__intervals"></view>
+  <view>3/10</view>
+</view>
 ```
 
 ### 4. 右对齐标签
@@ -178,6 +187,10 @@ page {
 ---
 
 ## 更新日志
+
+### v1.1.0 (2025-12-25)
+- 新增 `.tag__multi--blue` 蓝色多段标签变体
+- 为 `.tag view` 添加 `line-height: 1`，确保所有 tag 内的子 view 高度统一
 
 ### v1.0.0 (2025-12-21)
 - 初始版本
