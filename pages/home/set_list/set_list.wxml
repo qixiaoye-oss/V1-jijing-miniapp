@@ -29,18 +29,11 @@
               <view>平均{{chapter.averageAccuracy}}%</view>
             </view>
           </block>
-          <block wx:if="{{chapter.accuracy}}">
-            <view class="tag tag__multi tag__multi--orange" wx:if="{{chapter.accuracy < chapter.averageAccuracy}}">
-              <view>正确率{{chapter.accuracy}}%</view>
-              <view class="tag__intervals"></view>
-              <view>平均{{chapter.averageAccuracy}}%</view>
-            </view>
-            <view class="tag tag__multi tag__multi--green" wx:if="{{chapter.accuracy >= chapter.averageAccuracy}}">
-              <view>正确率{{chapter.accuracy}}%</view>
-              <view class="tag__intervals"></view>
-              <view>平均{{chapter.averageAccuracy}}%</view>
-            </view>
-          </block>
+          <view class="tag tag__multi tag__multi--green" wx:if="{{chapter.accuracy}}">
+            <view>正确率{{chapter.accuracy}}%</view>
+            <view class="tag__intervals"></view>
+            <view>平均{{chapter.averageAccuracy}}%</view>
+          </view>
         </view>
       </view>
     </block>
