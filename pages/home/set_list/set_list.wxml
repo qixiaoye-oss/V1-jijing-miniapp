@@ -47,12 +47,6 @@
           <view class="tag tag__multi tag__multi--green" wx:if="{{chapter.isCompleteQ == 1}}">
             <view>已填空</view>
           </view>
-          <view class="tag tag__multi tag__multi--gray" wx:if="{{chapter.isCompleteK == 0}}">
-            <view>未速刷</view>
-          </view>
-          <view class="tag tag__multi tag__multi--green" wx:if="{{chapter.isCompleteK == 1}}">
-            <view>已速刷</view>
-          </view>
         </view>
       </view>
     </block>
