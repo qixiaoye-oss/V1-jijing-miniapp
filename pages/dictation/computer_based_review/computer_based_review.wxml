@@ -3,7 +3,7 @@
 <skeleton type="sentence" loading="{{loading}}" rows="{{5}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
 <view class="report-card" wx:if="{{!loading}}">
-  <view class="report-card__item" wx:for="{{detail.detail}}" wx:key="id" data-qid="{{item.questionId}}" data-sid="{{detail.setId}}" data-aid="{{detail.albumId}}" data-index="{{index + 1}}" data-length="{{detail.detail.length}}" bindtap="change" hover-class="tap-active" hover-stay-time="100">
+  <view class="report-card__item" wx:for="{{detail.detail}}" wx:key="id">
     <view class="question">
       <view class="question__no">{{index+1}}</view>
       <view class="question__user-answer {{item.status != 1?'answer_wrong':''}}">{{wxsUtil.formatNull(item.userChoice,'未填写')}}</view>
@@ -13,7 +13,7 @@
       <tap-action icon="flag" wx:else>
         <image src="/images/v2/wrong_bt.png"></image>
       </tap-action>
-      <tap-action icon="next" bind:tap="change" data-index="{{index}}">
+      <tap-action icon="next" bind:tap="change" data-qid="{{item.questionId}}" data-sid="{{detail.setId}}" data-aid="{{detail.albumId}}" data-index="{{index + 1}}" data-length="{{detail.detail.length}}">
         <image src="/images/v2/next_bt.png"></image>
       </tap-action>
     </view>
