@@ -4,12 +4,12 @@ page {
 }
 
 .report-card {
-  border: 1px solid var(--question-color);
+  border: 1px solid var(--theme-color);
   border-radius: 9px;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .question {
@@ -20,8 +20,8 @@ page {
 }
 
 .question__no {
-  background-color: var(--question-bcakground-color);
-  color: var(--question-color);
+  background-color: var(--theme-bcakground-color);
+  color: var(--theme-color);
   flex-shrink: 0;
   width: 28px;
   height: 28px;
@@ -29,7 +29,7 @@ page {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: 3px;
   font-size: 12px;
 }
 
@@ -43,12 +43,12 @@ page {
 }
 
 .right-answers {
-  color: var(--question-color);
+  color: var(--theme-color);
   font-weight: bold;
   line-height: 1.4;
   font-size: 16px;
   padding-left: 43px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .scoring_reviews {
