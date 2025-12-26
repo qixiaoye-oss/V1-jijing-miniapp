@@ -14,6 +14,11 @@ Page({
   },
   toChildPage(e) {
     let item = e.currentTarget.dataset.item
+    console.log(item)
+    if (item.isInside == '0') {
+      api.modal('', '暂无权限', false)
+      return
+    }
     let param = {
       sid: item.id,
       aid: this.options.aid,
