@@ -5,7 +5,7 @@ const pageLoading = require('../../../behaviors/pageLoading')
 Page({
   behaviors: [pageGuard.behavior, pageLoading],
   data: {
-    version: '1.0.4',
+    version: '1.0.2',
   },
   onShow: function () {
     this.startLoading()
