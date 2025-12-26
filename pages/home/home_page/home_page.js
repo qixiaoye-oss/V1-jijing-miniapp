@@ -43,9 +43,10 @@ Page({
       wx.navigateTo({
         url: this.data.noPermissionUrl,
       })
+    }else{
+      let item = e.currentTarget.dataset.item
+      this.navigateTo(this.data.pageUrl[item.type] + `?sid=${item.id}`)
     }
-    let item = e.currentTarget.dataset.item
-    this.navigateTo(this.data.pageUrl[item.type] + `?sid=${item.id}`)
   },
   toNoticeListPage() {
     this.navigateTo('/pages/notice/list/index')
