@@ -37,6 +37,10 @@ Page({
   getUserInfo() {
     const _this = this
     api.request(this, '/user/v1/user/info', {}, true).then(() => {
+      // "游客" 显示为 "免费版"
+      if (_this.data.permission_duration === '游客') {
+        _this.setData({ permission_duration: '免费版' })
+      }
       _this.setDataReady()
       _this.finishLoading()
     }).catch(() => {

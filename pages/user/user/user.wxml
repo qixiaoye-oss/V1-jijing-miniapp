@@ -8,7 +8,7 @@
     </view>
   </view>
   <view class="menu-item" bind:tap="toUpdateUserInfo">修改用户信息</view>
-  <view class="menu-item">权限 <text class="menu-item__value">{{permission_duration || '游客'}}</text></view>
+  <view class="menu-item">权限 <text class="menu-item__value">{{permission_duration || '免费版'}}</text></view>
   <block wx:if="{{user.isManager == 1}}">
     <view class="menu-item" bind:tap="toUpdateAuth">用户权限管理</view>
   </block>
