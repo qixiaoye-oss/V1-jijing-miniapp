@@ -5,15 +5,17 @@ const pageLoading = require('../../../behaviors/pageLoading')
 Page({
   behaviors: [pageGuard.behavior, pageLoading],
   data: {
-    version: '1.0.2',
+    version: '1.0.0',
   },
   onShow: function () {
     this.startLoading()
     this.getUserInfo()
-    const miniProgram = wx.getAccountInfoSync();
-    this.setData({
-      version: miniProgram.miniProgram.version,
-    })
+    // 获取版本号（仅正式版小程序有 version 字段）
+    const accountInfo = wx.getAccountInfoSync()
+    const version = accountInfo.miniProgram.version
+    if (version) {
+      this.setData({ version })
+    }
   },
   onShareAppMessage: function () {
     return api.share('用户中心', this)
