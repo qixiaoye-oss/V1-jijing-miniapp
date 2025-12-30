@@ -5,15 +5,17 @@ const pageLoading = require('../../../behaviors/pageLoading')
 Page({
   behaviors: [pageGuard.behavior, pageLoading],
   data: {
-    version: '1.0.2',
+    version: '1.0.0',
   },
   onShow: function () {
     this.startLoading()
     this.getUserInfo()
-    const miniProgram = wx.getAccountInfoSync();
-    this.setData({
-      version: miniProgram.miniProgram.version,
-    })
+    // 获取版本号（仅正式版小程序有 version 字段）
+    const accountInfo = wx.getAccountInfoSync()
+    const version = accountInfo.miniProgram.version
+    if (version) {
+      this.setData({ version })
+    }
   },
   onShareAppMessage: function () {
     return api.share('用户中心', this)
@@ -35,6 +37,10 @@ Page({
   getUserInfo() {
     const _this = this
     api.request(this, '/user/v1/user/info', {}, true).then(() => {
+      // "游客" 显示为 "免费版"
+      if (_this.data.permission_duration === '游客') {
+        _this.setData({ permission_duration: '免费版' })
+      }
       _this.setDataReady()
       _this.finishLoading()
     }).catch(() => {
