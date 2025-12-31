@@ -37,4 +37,7 @@ Page({
     this.listData()
   },
   // ===========数据获取 End===========
+  onShareAppMessage() {
+    return api.share('考雅机经Open题库', this)
+  }
 })
