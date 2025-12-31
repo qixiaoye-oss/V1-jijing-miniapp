@@ -1,9 +1,10 @@
 const api = getApp().api
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
+const buttonGroupHeight = require('../../../behaviors/button-group-height')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
+  behaviors: [pageGuard.behavior, pageLoading, buttonGroupHeight],
   data: {
     usefulCount: 0,
     shaking: false
@@ -27,10 +28,10 @@ Page({
 
     // 每次点击都触发 shake 动画
     // 等 hover 效果结束后再触发 shake 动画
-    setTimeout(() => {
+    this.registerTimer('shakeStart', () => {
       this.setData({ shaking: true })
       // 动画结束后移除 shake 类
-      setTimeout(() => {
+      this.registerTimer('shakeEnd', () => {
         this.setData({ shaking: false })
       }, 600)
     }, 150)
@@ -39,12 +40,15 @@ Page({
   // ===========数据获取 Start===========
   // 访问接口获取数据
   listData() {
-    const _this = this
-    api.request(this, `/popular/science/v1/detail//${this.options.id}`, {}, true).then(() => {
-      _this.setDataReady()
-      _this.finishLoading()
+    api.request(this, `/popular/science/v1/detail/${this.options.id}`, {}, true).then(() => {
+      this.setDataReady()
+      this.finishLoading()
+      // 延迟计算，确保按钮组渲染完成
+      wx.nextTick(() => {
+        this.updateButtonGroupHeight()
+      })
     }).catch(() => {
-      pageGuard.goBack(_this)
+      pageGuard.goBack(this)
     })
   },
   lable(type) {

@@ -1,7 +1,7 @@
 const api = getApp().api
-const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
 const loadError = require('../../../behaviors/loadError')
+const pageGuard = require('../../../behaviors/pageGuard')
 
 Page({
   behaviors: [pageGuard.behavior, pageLoading, loadError],
@@ -9,7 +9,17 @@ Page({
   // ===========生命周期 Start===========
   onShow() {
     this.startLoading()
+    this.hideLoadError()
     this.listData()
+  },
+  // 重试加载
+  retryLoad() {
+    this.startLoading()
+    this.hideLoadError()
+    this.listData()
+  },
+  onShareAppMessage() {
+    return api.share('考雅机经Open题库', this)
   },
   // ===========生命周期 End===========
   // ===========业务操作 Start===========
@@ -22,22 +32,10 @@ Page({
   // ===========数据获取 Start===========
   // 访问接口获取数据
   listData() {
-    const _this = this
-    api.request(this, '/popular/science/v1/miniapp/list', {}, true).then(() => {
-      _this.setDataReady()
-      _this.finishLoading()
-    }).catch(() => {
-      pageGuard.showRetry(_this)
-    })
-  },
-  // 重试加载
-  retryLoad() {
-    this.hideLoadError()
-    this.startLoading()
-    this.listData()
+    api.request(this, '/popular/science/v1/miniapp/list', {}, true)
+      .then(() => { this.setDataReady() })
+      .catch(() => { pageGuard.showRetry(this) })
+      .finally(() => { this.finishLoading() })
   },
   // ===========数据获取 End===========
-  onShareAppMessage() {
-    return api.share('考雅机经Open题库', this)
-  }
 })
