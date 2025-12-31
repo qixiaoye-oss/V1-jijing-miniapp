@@ -18,7 +18,7 @@ Page({
     }
   },
   onShareAppMessage: function () {
-    return api.share('用户中心', this)
+    return api.share('考雅机经Open题库', this)
   },
   toUpdateUserInfo() {
     this.navigateTo('/pages/user/login/login')

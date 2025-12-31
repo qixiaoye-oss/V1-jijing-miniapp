@@ -29,7 +29,7 @@ Page({
     this.listPopularScienceData()
   },
   onShareAppMessage() {
-    return api.share('飕飕听烤鸭版', this)
+    return api.share('考雅机经Open题库', this)
   },
   // ===========生命周期 End===========
   // ===========业务操作 Start===========

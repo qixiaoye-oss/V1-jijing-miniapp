@@ -71,5 +71,8 @@ Page({
     this.hideLoadError()
     this.startLoading()
     this.listSet()
+  },
+  onShareAppMessage() {
+    return api.share('考雅机经Open题库', this)
   }
 })
