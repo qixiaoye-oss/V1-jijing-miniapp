@@ -9,20 +9,10 @@ Page({
     pageUrl: {
       forecast: '/pages/home/album_list/album_list',
       wrong_word: '/pages/dictation/wrong_list/wrong_list'
-    },
-    occupancyFlag: false
+    }
   },
   // ===========生命周期 Start===========
-  onShow() {
-    const query = wx.createSelectorQuery()
-    query.selectViewport().boundingClientRect((rect) => {
-      let availableWidth = rect.width - 40 - 10 - 20
-      this.setData({
-        occupancyFlag: availableWidth > 335
-      })
-    })
-    query.exec()
-  },
+  onShow() {},
   onShowLogin() {
     this.startLoading()
     this.listSubject(true)
