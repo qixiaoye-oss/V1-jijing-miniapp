@@ -40,9 +40,7 @@ Page({
   toChildPage(e) {
     let isInside = e.currentTarget.dataset.isInside
     if (isInside === '0') {
-      wx.navigateTo({
-        url: this.data.noPermissionUrl,
-      })
+      this.listPopularScienceByModule()
     }else{
       let item = e.currentTarget.dataset.item
       this.navigateTo(this.data.pageUrl[item.type] + `?sid=${item.id}`)
@@ -80,6 +78,14 @@ Page({
   },
   listPopularScienceData() {
     api.request(this, '/popular/science/v1/miniapp/home', {}, true)
+  },
+  listPopularScienceByModule() {
+    api.request(this, '/popular/science/v1/list/no_permission', {}, true).then(res=>{
+      const list = res.popularScienceList || []
+      if (list.length == 1){
+        this.navigateTo(`/pages/notice/detail/index?id=${list[0].id}`)
+      }
+    })
   },
   // ===========数据获取 End===========
 })
