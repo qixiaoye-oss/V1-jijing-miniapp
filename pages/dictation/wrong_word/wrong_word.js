@@ -1,22 +1,24 @@
 const api = getApp().api
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
+const smartLoading = require('../../../behaviors/smartLoading')
 let audio
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
-
+  behaviors: [pageGuard.behavior, pageLoading, smartLoading],
   data: {
     audioPlay: true,
     audioIndex: -1,
     wordList: [],
     showHidden: false
   },
+  // 只在 onLoad 加载一次，无需刷新
   onLoad(options) {
     this.startLoading()
     this.listWord(options)
   },
   onShow() {
+    // 仅初始化音频上下文
     const that = this
     audio = wx.createInnerAudioContext()
     audio.onEnded(() => {
@@ -30,7 +32,7 @@ Page({
     const _this = this
     api.request(this, '/keyVocabulary/wrongWord', {
       ...options,
-    }, true).then(res => {
+    }, false, 'GET', false).then(res => {
       res.list.forEach(item => {
         item['audioPlay'] = 'waiting'
         item['answerArr'] = item.referenceAnswer.split("|")
@@ -39,6 +41,7 @@ Page({
       _this.setData({
         wordList: list
       })
+      _this.markLoaded()
       _this.setDataReady()
       _this.finishLoading()
     }).catch(() => {
