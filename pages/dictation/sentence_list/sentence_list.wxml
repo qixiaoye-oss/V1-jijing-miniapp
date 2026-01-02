@@ -1,7 +1,7 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
-<skeleton type="sentence" loading="{{loading}}" rows="{{5}}" />
-<view class="main-page" wx:if="{{!loading && list.length > 0}}">
+<skeleton type="sentence" loading="{{!_isDataReady}}" rows="{{5}}" />
+<view class="main-page" wx:if="{{_isDataReady && list.length > 0}}">
   <block wx:for="{{list}}" wx:key="id" wx:for-item="item" wx:for-index="idx">
     <view id="ID{{item.id}}" class="list_container {{item.status === 0?'list_undone':''}} {{scrollIntoId === 'ID'+item.id ? 'select' : ''}}">
       <view class="listening_header flex_row">
@@ -30,4 +30,4 @@
   </block>
 </view>
 <view class="page-safe-area"></view>
-<view class="no-data" wx:if="{{!loading && list.length==0}}">暂无数据</view>
+<view class="no-data" wx:if="{{_isDataReady && list.length==0}}">暂无数据</view>

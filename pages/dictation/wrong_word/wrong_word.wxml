@@ -1,8 +1,8 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
-<skeleton type="sentence" loading="{{loading}}" rows="{{5}}" />
+<skeleton type="sentence" loading="{{!_isDataReady}}" rows="{{5}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
-<view class="base_page layout_grid" wx:if="{{!loading}}">
+<view class="base_page layout_grid" wx:if="{{_isDataReady}}">
   <view wx:for="{{wordList}}" wx:key="item" class="question_container">
     <view class="user_choice_cell">
       <block wx:if="{{item.operationType === '1'}}">
@@ -41,7 +41,7 @@
   </view>
   <view class="no-data" wx:if="{{wordList.length == 0}}">暂无数据</view>
 </view>
-<view class="btn-page-bottom" wx:if="{{!loading}}">
+<view class="btn-page-bottom" wx:if="{{_isDataReady}}">
   <view class="btn-group-single">
     <tap-action icon="correct" bind:tap="review">
       <view>打卡</view>

@@ -2,8 +2,8 @@
 <import src="/templates/load-error.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <template is="loadError" data="{{loadError}}" />
-<skeleton type="list" loading="{{loading}}" rows="{{5}}" avatar="{{true}}" />
-<view class="main-page" wx:if="{{!loading && list.length > 0}}">
+<skeleton type="list" loading="{{!_isDataReady}}" rows="{{5}}" avatar="{{true}}" />
+<view class="main-page" wx:if="{{_isDataReady && list.length > 0}}">
   <view class="main-item">
     <view class="main-item__title" style="background: {{parent.colorRgba}};">
       <image class="main-item__title--icon" wx:if="{{parent.iconUrl}}" src="{{parent.iconUrl}}"></image>
@@ -40,4 +40,4 @@
   </view>
 </view>
 <view class="page-safe-area"></view>
-<view class="no-data" wx:if="{{!loading && list.length==0}}">暂无数据</view>
+<view class="no-data" wx:if="{{_isDataReady && list.length==0}}">暂无数据</view>

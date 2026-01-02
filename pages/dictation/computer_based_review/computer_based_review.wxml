@@ -1,8 +1,8 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
-<skeleton type="sentence" loading="{{loading}}" rows="{{5}}" />
+<skeleton type="sentence" loading="{{!_isDataReady}}" rows="{{5}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
-<view class="report-card" wx:if="{{!loading}}">
+<view class="report-card" wx:if="{{_isDataReady}}">
   <view class="report-card__item" wx:for="{{detail.detail}}" wx:key="id">
     <view class="question">
       <view class="question__no">{{index+1}}</view>
