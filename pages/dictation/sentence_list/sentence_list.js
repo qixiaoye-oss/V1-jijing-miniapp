@@ -1,4 +1,3 @@
-const api = require('../../../utils/api')
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
 const smartLoading = require('../../../behaviors/smartLoading')
@@ -8,98 +7,121 @@ let audio
 Page({
   behaviors: [pageGuard.behavior, pageLoading, smartLoading],
   data: {
+    list: [],
     endTime: 0,
     stauts: 0,
     scrollIntoId: ''
   },
-  // 只在 onLoad 加载一次，无需刷新
+
   onLoad(options) {
     this.startLoading()
-    this.getDetail()
+
+    // 从 storage 读取数据（spot_dictation 已存入）
+    const list = wx.getStorageSync('listenings')
+    if (!list || list.length === 0) {
+      wx.showToast({ title: '数据加载失败', icon: 'none' })
+      pageGuard.goBack(this)
+      return
+    }
+
+    // 初始化播放状态
+    list.forEach(i => {
+      i['audioPlay'] = 'stop'
+    })
+
+    this.setData({
+      list: list,
+      scrollIntoId: 'ID' + options.paragraphId
+    })
+
+    this.markLoaded()
+    this.setDataReady()
+    this.finishLoading()
+
+    // 滚动到指定位置
+    setTimeout(() => {
+      const query = wx.createSelectorQuery()
+      query.select('#ID' + options.paragraphId).boundingClientRect()
+      query.selectViewport().scrollOffset()
+      query.exec((res) => {
+        if (res[0] && res[1]) {
+          wx.pageScrollTo({
+            scrollTop: res[1].scrollTop + res[0].top - 100,
+            duration: 300
+          })
+        }
+      })
+    }, 200)
+  },
+
+  onShow() {
+    // 刷新列表状态（从 storage 同步最新状态）
+    const storageList = wx.getStorageSync('listenings')
+    if (storageList) {
+      storageList.forEach(i => {
+        i['audioPlay'] = 'stop'
+      })
+      this.setData({ list: storageList })
+    }
+
+    // 初始化音频（从 storage 读取音频路径）
     audio = wx.createInnerAudioContext()
+    audio.src = wx.getStorageSync('tempAudioUrl')
     audio.onEnded(() => {
       this.audioStop()
     })
   },
-  onShow() {
-    let list = wx.getStorageSync('listenings')
-    list.forEach(i => {
-      i['audioPlay'] = "stop"
-    })
-    this.setData({
-      list: list
-    })
-  },
+
   audioStop() {
-    let list = this.data.list
+    const { list } = this.data
     list.forEach(i => {
-      i['audioPlay'] = "stop"
+      i['audioPlay'] = 'stop'
     })
-    this.setData({
-      list: list
-    })
+    this.setData({ list: list })
   },
+
   playAudio(e) {
     iaudio.pause()
     audio.stop()
     this.audioStop()
-    let list = this.data.list
-    let nextIdx = e.currentTarget.dataset.idx
-    this.setData({
-      stauts: 1
-    })
+
+    const { list } = this.data
+    const nextIdx = e.currentTarget.dataset.idx
+
+    this.setData({ stauts: 1 })
+
     audio.src = list[nextIdx].list[0].audioUrl
     list[nextIdx].audioPlay = 'play'
-    this.setData({
-      list: list
-    })
+    this.setData({ list: list })
+
     setTimeout(() => {
       audio.play()
-    }, 500);
+    }, 500)
   },
+
   onHide() {
-    audio.destroy()
+    if (audio) {
+      audio.destroy()
+    }
   },
+
   onUnload() {
-    audio.destroy()
+    if (audio) {
+      audio.destroy()
+    }
   },
+
   toDetail(e) {
-    let pages = getCurrentPages()
-    var prevPage = pages[pages.length - 2]; //上一个页面
-    prevPage.setData({
-      index: e.currentTarget.dataset.idx
-    })
+    const idx = e.currentTarget.dataset.idx
+
+    // 设置上一页的 index
+    const pages = getCurrentPages()
+    const prevPage = pages[pages.length - 2]
+    if (prevPage) {
+      prevPage.setData({ index: idx })
+    }
+
     iaudio.pause()
     this.navigateBack()
-  },
-  getDetail() {
-    const _this = this
-    api.request(this, '/set/detail', {
-      sid: this.options.sid,
-    }, false, 'GET', false).then(res => {
-      audio.src = res.detail.audioUrl
-      _this.markLoaded()
-      _this.setDataReady()
-      _this.finishLoading()
-      // 使用原生页面滚动到指定元素
-      setTimeout(() => {
-        const query = wx.createSelectorQuery()
-        query.select('#ID' + _this.options.paragraphId).boundingClientRect()
-        query.selectViewport().scrollOffset()
-        query.exec((res) => {
-          if (res[0] && res[1]) {
-            wx.pageScrollTo({
-              scrollTop: res[1].scrollTop + res[0].top - 100,
-              duration: 300
-            })
-            _this.setData({
-              scrollIntoId: "ID" + _this.options.paragraphId
-            })
-          }
-        })
-      }, 200);
-    }).catch(() => {
-      pageGuard.goBack(_this)
-    })
   }
 })
