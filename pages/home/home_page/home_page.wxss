@@ -1,29 +1,35 @@
-/* 首页样式 */
+/* 首页样式 - 与 V1-speak 对齐 */
 
-/* ========== 0. 初始加载状态 ========== */
+/* ========== 0. 初始化提示（登录中） ========== */
 .init-loading {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 100rpx; /* 预留 tabBar 空间 */
+  bottom: 0;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: #fff;
-  z-index: 100;
+  align-items: center;
+  /* 底部 tabBar 约 100rpx，向上偏移使视觉居中 */
+  padding-bottom: 100rpx;
 }
 
-/* Shimmer 闪光动效 */
-.shimmer {
-  font-size: 32rpx;
+.init-loading__text {
+  font-size: 15px;
   color: #999;
-  background: linear-gradient(90deg, #999 0%, #ccc 50%, #999 100%);
+  background: linear-gradient(
+    90deg,
+    #999 0%,
+    #999 40%,
+    #ccc 50%,
+    #999 60%,
+    #999 100%
+  );
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 1.5s infinite;
+  color: transparent;
+  animation: shimmer 1.5s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -210,4 +216,10 @@
 /* 按钮靠右对齐 */
 .home-view-all > tap-action {
   margin-left: auto;
+}
+
+/* 查看所有按钮中的图标 */
+.home-view-all image {
+  width: 20px;
+  height: 20px;
 }
