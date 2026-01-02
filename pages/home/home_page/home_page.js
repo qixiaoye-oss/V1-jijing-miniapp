@@ -5,16 +5,37 @@ const pageLoading = require('../../../behaviors/pageLoading')
 const loadError = require('../../../behaviors/loadError')
 const smartLoading = require('../../../behaviors/smartLoading')
 
+// 加载阶段对应的提示文字
+const LOADING_TEXTS = {
+  connecting: '正在建立连接...',
+  logging: '加载用户数据...',
+  ready: '即将完成加载...'
+}
+
 Page({
   behaviors: [pageGuard.behavior, pageLoading, loadError, smartLoading],
   data: {
+    loadingText: LOADING_TEXTS.connecting,
     pageUrl: {
       forecast: '/pages/home/album_list/album_list',
       wrong_word: '/pages/dictation/wrong_list/wrong_list'
     }
   },
   // ===========生命周期 Start===========
-  onShow() {},
+  onShow() {
+    // 首次加载时启动加载阶段监控
+    if (!this.data._isDataReady && !this.data.list) {
+      this._watchLoadingStage()
+    }
+  },
+  onHide() {
+    // 页面隐藏时清理定时器
+    this._clearLoadingStageTimer()
+  },
+  onUnload() {
+    // 页面卸载时清理定时器
+    this._clearLoadingStageTimer()
+  },
   onShowLogin() {
     // 使用智能加载策略判断是否需要加载
     if (!this.shouldLoad()) {
@@ -138,4 +159,45 @@ Page({
     })
   },
   // ===========数据获取 End===========
+  // ===========Shimmer 加载提示 Start===========
+  /**
+   * 监控加载阶段，更新提示文字
+   */
+  _watchLoadingStage() {
+    const _this = this
+    // 清除已有定时器
+    this._clearLoadingStageTimer()
+    // 每 100ms 检查一次加载阶段
+    this._loadingStageTimer = setInterval(() => {
+      const stage = app.globalData.loadingStage
+      _this._updateLoadingText(stage)
+      // 数据就绪后停止监控
+      if (_this.data._isDataReady || _this.data.list) {
+        _this._clearLoadingStageTimer()
+      }
+    }, 100)
+  },
+
+  /**
+   * 更新加载提示文字
+   * @param {string} stage - 加载阶段
+   */
+  _updateLoadingText(stage) {
+    const text = LOADING_TEXTS[stage] || LOADING_TEXTS.connecting
+    // 只在值变化时才 setData，避免不必要的渲染
+    if (this.data.loadingText !== text) {
+      this.setData({ loadingText: text })
+    }
+  },
+
+  /**
+   * 清理加载阶段监控定时器
+   */
+  _clearLoadingStageTimer() {
+    if (this._loadingStageTimer) {
+      clearInterval(this._loadingStageTimer)
+      this._loadingStageTimer = null
+    }
+  }
+  // ===========Shimmer 加载提示 End===========
 })

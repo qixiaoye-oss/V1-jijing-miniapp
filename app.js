@@ -30,7 +30,9 @@ App({
   // 首页数据预加载缓存
   globalData: {
     homeDataCache: null,
-    popularScienceCache: null
+    popularScienceCache: null,
+    // 加载阶段：connecting -> logging -> ready
+    loadingStage: 'connecting'
   },
 
   onShow: function () {
@@ -76,12 +78,16 @@ App({
     }
     // 自动登录
     const that = this
+    // 更新加载阶段：开始登录
+    that.globalData.loadingStage = 'logging'
     wx.login().then(data => {
       api.request(this, '/user/v1/login', {
         code: data.code
       }, true, false).then(res => {
         wx.setStorageSync('token', res.token)
         userData.login = true
+        // 更新加载阶段：登录成功，开始加载数据
+        that.globalData.loadingStage = 'ready'
         // 登录成功后预加载首页数据
         that._preloadHomeData()
       })
