@@ -125,6 +125,7 @@ Page({
       this.setData(res)
     }
     this.markLoaded()
+    this.setDataReady()
     this.finishLoading()
   },
 
