@@ -125,20 +125,15 @@ Page({
     })
   },
   review() {
-    api.modal("本次打卡时间", this.getNowDate()).then(res => {
+    api.modal("本次打卡时间", this.getNowDate()).then(() => {
       api.request(this, '/keyVocabulary/reviewRecord', {
         id: this.options.id
-      }, false).then(res => {
-        // 获取页面栈，刷新上一页数据
-        const pages = getCurrentPages()
-        if (pages.length >= 2) {
-          const prevPage = pages[pages.length - 2]
-          if (prevPage && typeof prevPage.loadData === 'function') {
-            prevPage.loadData()
-          }
-        }
-        // 返回上一页
-        wx.navigateBack()
+      }, false).then(() => {
+        // 显示打卡成功提示，2秒后返回上一页
+        api.toast("打卡成功")
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 2000)
       })
     })
   },
