@@ -90,6 +90,8 @@ Page({
     })
   },
   toList: function () {
+    // 跳转前停止播放
+    this.pauseAudio()
     this.navigateTo('../sentence_list/sentence_list?sid=' + this.options.sid + "&paragraphId=" + this.data.paragraph.id)
   },
   onHide: function () { },
