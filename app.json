@@ -12,7 +12,6 @@
     "pages/dictation/result_list/result_list",
     "pages/dictation/explain/explain",
     "pages/dictation/sentence_list/sentence_list",
-    "pages/dictation/sentence_detail/sentence_detail",
     "pages/dictation/wrong_list/wrong_list",
     "pages/dictation/wrong_word/wrong_word",
     "pages/user/user/user",
