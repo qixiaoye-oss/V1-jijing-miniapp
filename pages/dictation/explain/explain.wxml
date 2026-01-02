@@ -1,5 +1,6 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
+<skeleton type="sentence" loading="{{!_isDataReady}}" rows="{{3}}" />
 <block wx:if="{{_isDataReady}}">
 <view class="list_container">
   <view class="listening_header">{{param.index}}/{{param.length}}</view>
