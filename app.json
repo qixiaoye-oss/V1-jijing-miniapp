@@ -7,9 +7,6 @@
     "pages/notice/list/index",
     "pages/notice/detail/index",
     "pages/dictation/spot_dictation/spot_dictation",
-    "pages/dictation/word_dictation/word_dictation",
-    "pages/dictation/quick_answer/quick_answer",
-    "pages/dictation/word_list/word_list",
     "pages/dictation/computer_based_review/computer_based_review",
     "pages/dictation/paper_based_review/paper_based_review",
     "pages/dictation/result_list/result_list",
@@ -18,15 +15,8 @@
     "pages/dictation/sentence_detail/sentence_detail",
     "pages/dictation/wrong_list/wrong_list",
     "pages/dictation/wrong_word/wrong_word",
-    "pages/dictation/wrong_exam/wrong_exam",
-    "pages/dictation/wrong_exam_result/wrong_exam_result",
-    "pages/dictation/wrong_exam_record/wrong_exam_record",
-    "pages/dictation/wrong_sentence/wrong_sentence",
     "pages/user/user/user",
-    "pages/user/login/login",
-    "pages/teacher/widget/widget",
-    "pages/teacher/privilege/privilege",
-    "pages/teacher/user_role/user_role"
+    "pages/user/login/login"
   ],
   "window": {
     "backgroundColor": "#ffffff",
