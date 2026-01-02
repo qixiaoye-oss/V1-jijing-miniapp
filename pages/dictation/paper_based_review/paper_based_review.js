@@ -1,10 +1,11 @@
 const api = require('../../../utils/api')
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
+const smartLoading = require('../../../behaviors/smartLoading')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
-  onShow() { },
+  behaviors: [pageGuard.behavior, pageLoading, smartLoading],
+  // 只在 onLoad 加载一次，无需刷新
   onLoad: function (options) {
     this.startLoading()
     this.listQuestion()
@@ -24,6 +25,7 @@ Page({
     this.setData({
       list: wordList
     })
+    this.markLoaded()
     this.setDataReady()
     this.finishLoading()
   },
