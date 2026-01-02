@@ -1,10 +1,12 @@
-const api = getApp().api
+const app = getApp()
+const api = app.api
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
 const loadError = require('../../../behaviors/loadError')
+const smartLoading = require('../../../behaviors/smartLoading')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading, loadError],
+  behaviors: [pageGuard.behavior, pageLoading, loadError, smartLoading],
   data: {
     pageUrl: {
       forecast: '/pages/home/album_list/album_list',
@@ -14,9 +16,37 @@ Page({
   // ===========生命周期 Start===========
   onShow() {},
   onShowLogin() {
-    this.startLoading()
-    this.listSubject(true)
-    this.listPopularScienceData()
+    // 使用智能加载策略判断是否需要加载
+    if (!this.shouldLoad()) {
+      return
+    }
+
+    const isSilent = this.shouldSilentRefresh()
+
+    // 首次加载显示 loading，静默刷新不显示
+    if (!isSilent) {
+      this.startLoading()
+    }
+
+    // 尝试使用预加载缓存
+    const cachedHomeData = app.getPreloadCache('home')
+    const cachedScienceData = app.getPreloadCache('popularScience')
+
+    if (cachedHomeData) {
+      // 使用缓存数据
+      this._handleHomeData(cachedHomeData, isSilent)
+    } else {
+      // 无缓存，正常请求
+      this.listSubject(!isSilent)
+    }
+
+    if (cachedScienceData) {
+      // 使用缓存数据
+      this._handleScienceData(cachedScienceData)
+    } else {
+      // 无缓存，正常请求
+      this.listPopularScienceData()
+    }
   },
   onShareAppMessage() {
     return api.share('考雅机经Open题库', this)
@@ -51,23 +81,53 @@ Page({
   },
   // ===========业务操作 End===========
   // ===========数据获取 Start===========
-  listSubject(isPull) {
+  listSubject(showLoading) {
     const _this = this
-    api.request(this, '/v2/home/list', {}, isPull).then(res => {
-      _this.setDataReady()
-      _this.finishLoading()
+    api.request(this, '/v2/home/list', {}, showLoading).then(res => {
+      _this._handleHomeData(res, !showLoading)
     }).catch(() => {
       pageGuard.showRetry(_this)
     })
   },
+
+  /**
+   * 处理首页数据
+   * @param {Object} res - 接口返回数据
+   * @param {boolean} isSilent - 是否静默更新
+   */
+  _handleHomeData(res, isSilent) {
+    if (isSilent) {
+      // 静默刷新使用 diff 更新，避免闪烁
+      this.diffSetData(res)
+    } else {
+      // 首次加载直接 setData
+      this.setData(res)
+    }
+    this.markLoaded()
+    this.finishLoading()
+  },
+
+  /**
+   * 处理科普数据
+   * @param {Object} res - 接口返回数据
+   */
+  _handleScienceData(res) {
+    this.diffSetData(res)
+  },
+
   retryLoad() {
     this.hideLoadError()
+    this.resetLoadState()
     this.startLoading()
     this.listSubject(true)
     this.listPopularScienceData()
   },
+
   listPopularScienceData() {
-    api.request(this, '/popular/science/v1/miniapp/home', {}, true)
+    const _this = this
+    api.request(this, '/popular/science/v1/miniapp/home', {}, true).then(res => {
+      _this._handleScienceData(res)
+    })
   },
   listPopularScienceByModule() {
     api.request(this, '/popular/science/v1/list/no_permission', {}, true).then(res=>{
