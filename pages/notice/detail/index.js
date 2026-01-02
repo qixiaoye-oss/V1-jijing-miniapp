@@ -43,9 +43,9 @@ Page({
   listData() {
     api.request(this, `/popular/science/v1/detail/${this._id}`, {}, true)
       .then((res) => {
-        this.setData(res)
-        this.finishLoading()
-        this.setDataReady()
+        this.setData(res)          // 1. 先设置数据
+        this.setDataReady()        // 2. 再标记就绪（触发骨架屏→内容切换）
+        this.finishLoading()       // 3. 最后结束进度条
         // 延迟计算，确保按钮组渲染完成
         wx.nextTick(() => {
           this.updateButtonGroupHeight()
