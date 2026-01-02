@@ -78,6 +78,12 @@ App({
     }
     // 自动登录
     const that = this
+    // 清除旧 token，避免旧 token 干扰新的登录请求
+    const oldToken = wx.getStorageSync('token')
+    if (oldToken) {
+      console.log('[Login] 清除旧 token')
+      wx.removeStorageSync('token')
+    }
     // 更新加载阶段：开始登录
     that.globalData.loadingStage = 'logging'
     wx.login().then(data => {
