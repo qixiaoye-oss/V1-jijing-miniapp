@@ -23,10 +23,8 @@ Page({
   },
   // ===========生命周期 Start===========
   onShow() {
-    // 首次加载时启动加载阶段监控
-    if (!this.data._isDataReady && !this.data.list) {
-      this._watchLoadingStage()
-    }
+    // 监听加载阶段变化
+    this._watchLoadingStage()
   },
   onHide() {
     // 页面隐藏时清理定时器
@@ -37,37 +35,28 @@ Page({
     this._clearLoadingStageTimer()
   },
   onShowLogin() {
-    // 使用智能加载策略判断是否需要加载
-    if (!this.shouldLoad()) {
+    // 清除加载阶段监听（登录已完成）
+    this._clearLoadingStageTimer()
+
+    // 首页只在首次加载时请求数据，后续不刷新（内容无需实时更新）
+    const isFirstLoad = !this.data._hasLoaded
+    if (!isFirstLoad) {
       return
     }
 
-    const isSilent = this.shouldSilentRefresh()
-
-    // 首次加载显示 loading，静默刷新不显示
-    if (!isSilent) {
-      this.startLoading()
-    }
-
-    // 尝试使用预加载缓存
+    // 优先使用预加载缓存（必须主数据缓存存在才使用，科普是可选的）
     const cachedHomeData = app.getPreloadCache('home')
     const cachedScienceData = app.getPreloadCache('popularScience')
 
     if (cachedHomeData) {
-      // 使用缓存数据
-      this._handleHomeData(cachedHomeData, isSilent)
-    } else {
-      // 无缓存，正常请求
-      this.listSubject(!isSilent)
+      this._useCachedData(cachedHomeData, cachedScienceData)
+      return
     }
 
-    if (cachedScienceData) {
-      // 使用缓存数据
-      this._handleScienceData(cachedScienceData)
-    } else {
-      // 无缓存，正常请求
-      this.listPopularScienceData()
-    }
+    // 首次加载 - 走正常加载流程
+    this.startLoading()
+    this.hideLoadError()
+    this._loadAllData()
   },
   onShareAppMessage() {
     return api.share('考雅机经Open题库', this)
@@ -81,8 +70,8 @@ Page({
   toChildPage(e) {
     let isInside = e.currentTarget.dataset.isInside
     if (isInside === '0') {
-      this.listPopularScienceByModule()
-    }else{
+      this._listPopularScienceByModule()
+    } else {
       let item = e.currentTarget.dataset.item
       this.navigateTo(this.data.pageUrl[item.type] + `?sid=${item.id}`)
     }
@@ -95,66 +84,74 @@ Page({
     const id = e.currentTarget.dataset.id
     this.navigateTo(`/pages/notice/detail/index?id=${id}`)
   },
-  // 点击说明徽章（暂未连接API）
+  // 点击说明徽章
   onNoticeTap(e) {
     const id = e.currentTarget.dataset.id
     this.navigateTo(`/pages/notice/detail/index?id=${id}`, { checkReady: false })
   },
   // ===========业务操作 End===========
   // ===========数据获取 Start===========
-  listSubject(showLoading) {
-    const _this = this
-    api.request(this, '/v2/home/list', {}, showLoading).then(res => {
-      _this._handleHomeData(res, !showLoading)
-    }).catch(() => {
-      pageGuard.showRetry(_this)
-    })
-  },
-
   /**
-   * 处理首页数据
-   * @param {Object} res - 接口返回数据
-   * @param {boolean} isSilent - 是否静默更新
+   * 使用预加载的缓存数据
    */
-  _handleHomeData(res, isSilent) {
-    if (isSilent) {
-      // 静默刷新使用 diff 更新，避免闪烁
-      this.diffSetData(res)
-    } else {
-      // 首次加载直接 setData
-      this.setData(res)
+  _useCachedData(homeData, scienceData) {
+    const updateData = {}
+
+    if (scienceData) {
+      Object.assign(updateData, scienceData)
     }
-    this.markLoaded()
+
+    if (homeData) {
+      Object.assign(updateData, homeData)
+    }
+
+    if (Object.keys(updateData).length > 0) {
+      this.setData(updateData)
+    }
     this.setDataReady()
-    this.finishLoading()
+    this.markLoaded()
   },
 
   /**
-   * 处理科普数据
-   * @param {Object} res - 接口返回数据
+   * 并行加载所有数据
    */
-  _handleScienceData(res) {
-    this.diffSetData(res)
+  _loadAllData() {
+    // 并行请求两个接口，禁用自动 setData，手动合并数据
+    const promises = [
+      api.request(this, '/popular/science/v1/miniapp/home', {}, true, 'GET', false)
+        .catch(() => ({})),  // 科普数据加载失败不影响整体
+      api.request(this, '/v2/home/list', {}, true, 'GET', false)
+    ]
+
+    Promise.all(promises)
+      .then(([scienceData, homeData]) => {
+        // 合并数据，只调用一次 setData
+        this.setData({
+          ...scienceData,
+          ...homeData
+        })
+        this.setDataReady()
+        this.markLoaded()
+      })
+      .catch(() => {
+        pageGuard.showRetry(this)
+      })
+      .finally(() => {
+        this.finishLoading()
+      })
   },
 
+  // 重试加载
   retryLoad() {
-    this.hideLoadError()
-    this.resetLoadState()
     this.startLoading()
-    this.listSubject(true)
-    this.listPopularScienceData()
+    this.hideLoadError()
+    this._loadAllData()
   },
 
-  listPopularScienceData() {
-    const _this = this
-    api.request(this, '/popular/science/v1/miniapp/home', {}, true).then(res => {
-      _this._handleScienceData(res)
-    })
-  },
-  listPopularScienceByModule() {
-    api.request(this, '/popular/science/v1/list/no_permission', {}, true).then(res=>{
+  _listPopularScienceByModule() {
+    api.request(this, '/popular/science/v1/list/no_permission', {}, true).then(res => {
       const list = res.popularScienceList || []
-      if (list.length == 1){
+      if (list.length == 1) {
         this.navigateTo(`/pages/notice/detail/index?id=${list[0].id}`)
       }
     })
@@ -162,37 +159,37 @@ Page({
   // ===========数据获取 End===========
   // ===========Shimmer 加载提示 Start===========
   /**
-   * 监控加载阶段，更新提示文字
+   * 监听加载阶段变化，更新提示文字
    */
   _watchLoadingStage() {
-    const _this = this
-    // 清除已有定时器
-    this._clearLoadingStageTimer()
-    // 每 100ms 检查一次加载阶段
+    // 如果已有数据，不需要监听
+    if (this.data.list) {
+      this._clearLoadingStageTimer()
+      return
+    }
+
+    // 立即更新一次
+    this._updateLoadingText(app.globalData.loadingStage)
+
+    // 启动定时器轮询
     this._loadingStageTimer = setInterval(() => {
       const stage = app.globalData.loadingStage
-      _this._updateLoadingText(stage)
-      // 数据就绪后停止监控
-      if (_this.data._isDataReady || _this.data.list) {
-        _this._clearLoadingStageTimer()
-      }
+      this._updateLoadingText(stage)
     }, 100)
   },
 
   /**
    * 更新加载提示文字
-   * @param {string} stage - 加载阶段
    */
   _updateLoadingText(stage) {
     const text = LOADING_TEXTS[stage] || LOADING_TEXTS.connecting
-    // 只在值变化时才 setData，避免不必要的渲染
     if (this.data.loadingText !== text) {
       this.setData({ loadingText: text })
     }
   },
 
   /**
-   * 清理加载阶段监控定时器
+   * 清除加载阶段监听定时器
    */
   _clearLoadingStageTimer() {
     if (this._loadingStageTimer) {
