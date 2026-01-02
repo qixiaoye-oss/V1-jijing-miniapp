@@ -104,10 +104,6 @@ module.exports = Behavior({
         _needRefresh: false,
         _lastLoadTime: Date.now()
       })
-      // 同时标记数据就绪（兼容 pageGuard）
-      if (this.setDataReady) {
-        this.setDataReady()
-      }
     },
 
     /**

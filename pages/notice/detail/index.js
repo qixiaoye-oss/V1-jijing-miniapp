@@ -2,14 +2,16 @@ const api = getApp().api
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
 const buttonGroupHeight = require('../../../behaviors/button-group-height')
+const smartLoading = require('../../../behaviors/smartLoading')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading, buttonGroupHeight],
+  behaviors: [pageGuard.behavior, pageLoading, buttonGroupHeight, smartLoading],
   data: {
     usefulCount: 0,
     shaking: false
   },
   // ===========生命周期 Start===========
+  // 只在 onLoad 加载一次，无需刷新
   onLoad(options) {
     // 保存参数，提前发起请求（页面动画期间就开始请求）
     this._id = options.id
@@ -44,8 +46,9 @@ Page({
     api.request(this, `/popular/science/v1/detail/${this._id}`, {}, true)
       .then((res) => {
         this.setData(res)          // 1. 先设置数据
-        this.setDataReady()        // 2. 再标记就绪（触发骨架屏→内容切换）
-        this.finishLoading()       // 3. 最后结束进度条
+        this.markLoaded()          // 2. 标记加载完成
+        this.setDataReady()        // 3. 标记就绪（触发骨架屏→内容切换）
+        this.finishLoading()       // 4. 最后结束进度条
         // 延迟计算，确保按钮组渲染完成
         wx.nextTick(() => {
           this.updateButtonGroupHeight()
