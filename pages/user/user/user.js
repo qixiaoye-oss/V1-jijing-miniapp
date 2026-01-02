@@ -1,15 +1,23 @@
-var api = require('../../../utils/api')
+const api = require('../../../utils/api')
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
+const smartLoading = require('../../../behaviors/smartLoading')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
+  behaviors: [pageGuard.behavior, pageLoading, smartLoading],
   data: {
     version: '1.0.0',
   },
   onShow: function () {
+    // 只在首次加载时请求数据（用户信息不需要频繁刷新）
+    const isFirstLoad = !this.data._hasLoaded
+    if (!isFirstLoad) {
+      return
+    }
+
     this.startLoading()
     this.getUserInfo()
+
     // 获取版本号（仅正式版小程序有 version 字段）
     const accountInfo = wx.getAccountInfoSync()
     const version = accountInfo.miniProgram.version
@@ -22,10 +30,6 @@ Page({
   },
   toUpdateUserInfo() {
     this.navigateTo('/pages/user/login/login')
-  },
-  // 用户权限管理
-  toUpdateAuth() {
-    this.navigateTo('/pages/teacher/widget/widget')
   },
   // 查看权限有效期
   showRole() {
@@ -41,6 +45,7 @@ Page({
       if (_this.data.permission_duration === '游客') {
         _this.setData({ permission_duration: '免费版' })
       }
+      _this.markLoaded()
       _this.setDataReady()
       _this.finishLoading()
     }).catch(() => {

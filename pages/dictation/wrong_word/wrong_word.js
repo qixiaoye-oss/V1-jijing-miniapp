@@ -1,22 +1,24 @@
 const api = getApp().api
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
+const smartLoading = require('../../../behaviors/smartLoading')
 let audio
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
-
+  behaviors: [pageGuard.behavior, pageLoading, smartLoading],
   data: {
     audioPlay: true,
     audioIndex: -1,
     wordList: [],
     showHidden: false
   },
+  // 只在 onLoad 加载一次，无需刷新
   onLoad(options) {
     this.startLoading()
     this.listWord(options)
   },
   onShow() {
+    // 仅初始化音频上下文
     const that = this
     audio = wx.createInnerAudioContext()
     audio.onEnded(() => {
@@ -30,7 +32,7 @@ Page({
     const _this = this
     api.request(this, '/keyVocabulary/wrongWord', {
       ...options,
-    }, true).then(res => {
+    }, false, 'GET', false).then(res => {
       res.list.forEach(item => {
         item['audioPlay'] = 'waiting'
         item['answerArr'] = item.referenceAnswer.split("|")
@@ -39,6 +41,7 @@ Page({
       _this.setData({
         wordList: list
       })
+      _this.markLoaded()
       _this.setDataReady()
       _this.finishLoading()
     }).catch(() => {
@@ -122,20 +125,15 @@ Page({
     })
   },
   review() {
-    api.modal("本次打卡时间", this.getNowDate()).then(res => {
+    api.modal("本次打卡时间", this.getNowDate()).then(() => {
       api.request(this, '/keyVocabulary/reviewRecord', {
         id: this.options.id
-      }, false).then(res => {
-        // 获取页面栈，刷新上一页数据
-        const pages = getCurrentPages()
-        if (pages.length >= 2) {
-          const prevPage = pages[pages.length - 2]
-          if (prevPage && typeof prevPage.loadData === 'function') {
-            prevPage.loadData()
-          }
-        }
-        // 返回上一页
-        wx.navigateBack()
+      }, false).then(() => {
+        // 显示打卡成功提示，2秒后返回上一页
+        api.toast("打卡成功")
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 2000)
       })
     })
   },

@@ -10,7 +10,9 @@ Page({
     shaking: false
   },
   // ===========生命周期 Start===========
-  onShow() {
+  onLoad(options) {
+    // 保存参数，提前发起请求（页面动画期间就开始请求）
+    this._id = options.id
     this.startLoading()
     this.listData()
   },
@@ -38,21 +40,24 @@ Page({
   },
   // ===========业务操作 End===========
   // ===========数据获取 Start===========
-  // 访问接口获取数据
   listData() {
-    api.request(this, `/popular/science/v1/detail/${this.options.id}`, {}, true).then(() => {
-      this.setDataReady()
-      this.finishLoading()
-      // 延迟计算，确保按钮组渲染完成
-      wx.nextTick(() => {
-        this.updateButtonGroupHeight()
+    api.request(this, `/popular/science/v1/detail/${this._id}`, {}, true)
+      .then((res) => {
+        this.setData(res)          // 1. 先设置数据
+        this.setDataReady()        // 2. 再标记就绪（触发骨架屏→内容切换）
+        this.finishLoading()       // 3. 最后结束进度条
+        // 延迟计算，确保按钮组渲染完成
+        wx.nextTick(() => {
+          this.updateButtonGroupHeight()
+        })
       })
-    }).catch(() => {
-      pageGuard.goBack(this)
-    })
+      .catch(() => {
+        this.finishLoading()
+        pageGuard.goBack(this)
+      })
   },
   lable(type) {
-    api.request(this, `/popular/science/v1/label/${type}/${this.options.id}`, {}, true).catch(() => {
+    api.request(this, `/popular/science/v1/label/${type}/${this._id}`, {}, true).catch(() => {
       // 点赞失败仅提示，已在 api.js 中 toast
     })
   },

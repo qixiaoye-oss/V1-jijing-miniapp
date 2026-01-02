@@ -2,9 +2,10 @@
 <import src="/templates/load-error.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <template is="loadError" data="{{loadError}}" />
-<skeleton type="list" loading="{{loading}}" rows="{{6}}" avatar="{{true}}" />
+<!-- 骨架屏：使用 _isDataReady 严格互斥控制 -->
+<skeleton type="list" loading="{{!_isDataReady}}" rows="{{6}}" avatar="{{true}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
-<view class="album-list" wx:if="{{!loading}}">
+<view class="album-list" wx:if="{{_isDataReady}}">
   <block wx:for="{{list}}" wx:for-item="chapter" wx:for-index="chapterIndex" wx:key="id">
     <view class="album-item" bind:tap="toChildPage" data-id="{{chapter.id}}" style="border-color: {{chapter.colorRgb}};" hover-class="tap-active" hover-stay-time="100">
       <view class="album-item__underpaint" wx:if="{{chapter.completed != '100%'}}" style="background-image: linear-gradient(to right, {{chapter.colorRgba}} 0%, {{chapter.colorRgba}} {{wxsUtil.calcGradientStop(chapter.progress)}}%, #ffffff 100%); width: {{wxsUtil.calcProgressWidth(chapter.progress)}}%;"></view>
@@ -20,5 +21,5 @@
     </view>
   </block>
 </view>
-<view class="no-data" wx:if="{{!loading && list.length==0}}">暂无数据</view>
+<view class="no-data" wx:if="{{_isDataReady && list.length==0}}">暂无数据</view>
 <view class="page-safe-area"></view>

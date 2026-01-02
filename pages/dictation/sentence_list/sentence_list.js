@@ -1,20 +1,21 @@
 const api = require('../../../utils/api')
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
+const smartLoading = require('../../../behaviors/smartLoading')
 let iaudio = getApp().iaudio
 let audio
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
-
+  behaviors: [pageGuard.behavior, pageLoading, smartLoading],
   data: {
     endTime: 0,
     stauts: 0,
     scrollIntoId: ''
   },
+  // 只在 onLoad 加载一次，无需刷新
   onLoad(options) {
     this.startLoading()
-    this.getDetail(true)
+    this.getDetail()
     audio = wx.createInnerAudioContext()
     audio.onEnded(() => {
       this.audioStop()
@@ -71,12 +72,13 @@ Page({
     iaudio.pause()
     this.navigateBack()
   },
-  getDetail(isPull) {
+  getDetail() {
     const _this = this
     api.request(this, '/set/detail', {
       sid: this.options.sid,
-    }, isPull).then(res => {
+    }, false, 'GET', false).then(res => {
       audio.src = res.detail.audioUrl
+      _this.markLoaded()
       _this.setDataReady()
       _this.finishLoading()
       // 使用原生页面滚动到指定元素

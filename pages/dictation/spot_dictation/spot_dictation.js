@@ -92,9 +92,6 @@ Page({
   toList: function () {
     this.navigateTo('../sentence_list/sentence_list?sid=' + this.options.sid + "&paragraphId=" + this.data.paragraph.id)
   },
-  toExplain: function () {
-    this.navigateTo('../sentence_detail/sentence_detail?qid=' + this.data.paragraph.id + '&sid=' + this.options.sid)
-  },
   onHide: function () { },
   onUnload: function () {
     this.zero()

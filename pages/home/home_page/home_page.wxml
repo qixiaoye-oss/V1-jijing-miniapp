@@ -1,6 +1,10 @@
 <import src="/templates/page-loading.wxml" />
 <import src="/templates/load-error.wxml" />
 <view class="home">
+  <!-- 初始加载状态：Shimmer 文字提示 -->
+  <view class="init-loading" wx:if="{{!_isDataReady && !list}}">
+    <text class="shimmer">{{loadingText}}</text>
+  </view>
   <template is="pageLoading" data="{{loading, loadProgress}}" />
   <template is="loadError" data="{{loadError}}" />
   <skeleton type="card" loading="{{loading}}" rows="{{6}}" />

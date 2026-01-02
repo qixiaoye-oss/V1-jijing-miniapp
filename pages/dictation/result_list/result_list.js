@@ -1,26 +1,27 @@
 const api = require('../../../utils/api')
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
+const smartLoading = require('../../../behaviors/smartLoading')
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
-
-  onShow() { },
+  behaviors: [pageGuard.behavior, pageLoading, smartLoading],
+  // 只在 onLoad 加载一次，无需刷新
   onLoad: function (options) {
     this.startLoading()
-    this.listQuestion(true)
+    this.listQuestion()
   },
-  listQuestion(isPull) {
+  listQuestion() {
     const _this = this
     api.request(this, '/keyVocabulary/listExercise', {
       eid: this.options.eid,
-    }, isPull).then(res => {
+    }, false, 'GET', false).then(res => {
       res.detail.detail.forEach(item => {
         item['answerArr'] = item.answer.split("|")
       })
       _this.setData({
         [`detail.detail`]: res.detail.detail
       })
+      _this.markLoaded()
       _this.setDataReady()
       _this.finishLoading()
     }).catch(() => {

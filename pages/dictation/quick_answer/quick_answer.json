@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "tap-action": "/components/tap-action/index",
-    "play-setting": "/components/play-setting/index",
-    "progress-bar": "/components/progress-bar/progress-bar"
-  }
-}
