@@ -1,16 +1,19 @@
-<import src="/templates/page-loading.wxml" />
-<import src="/templates/load-error.wxml" />
+<import src="/templates/page-loading.wxml"/>
+<import src="/templates/load-error.wxml"/>
+<template is="pageLoading" data="{{loading, loadProgress}}"/>
+<template is="loadError" data="{{loadError}}"/>
+
 <view class="home">
   <!-- 初始化提示（登录中，骨架屏还未开始） -->
-  <view class="init-loading" wx:if="{{!loading && !list}}">
-    <text class="shimmer">{{loadingText}}</text>
+  <view class="init-loading" wx:if="{{!loading && !_isDataReady}}">
+    <text class="init-loading__text">{{loadingText}}</text>
   </view>
-  <template is="pageLoading" data="{{loading, loadProgress}}" />
-  <template is="loadError" data="{{loadError}}" />
-  <!-- 骨架屏（数据加载中） -->
+
+  <!-- 骨架屏（仅在 loading 阶段显示，与初始化提示互斥） -->
   <skeleton type="card" loading="{{loading}}" rows="{{6}}" />
+
   <!-- 科普内容区域 -->
-  <view class="home-main-item" wx:if="{{!loading && popularScience.list.length > 0}}" style="background:{{popularScience.colorRgba}}">
+  <view class="home-main-item" wx:if="{{_isDataReady && popularScience.list.length > 0}}" style="background:{{popularScience.colorRgba}}">
     <view class="home-main-item__title" style="color:{{popularScience.colorRgb}}">{{popularScience.title}}</view>
     <view class="home-main-item__content--grid">
       <block wx:for="{{popularScience.list}}" wx:key="noticeIndex" wx:for-item="notice" wx:for-index="noticeIndex">
@@ -21,7 +24,7 @@
               <view class="home-card__body">
                 <text class="home-card__body-title">{{notice.title}}</text>
                 <text class="home-card__body-separator"> · </text>
-                <text class="home-card__body-desc">{{notice.description || '雅思听力备考技巧与策略分享，帮助你更高效地提升听力水平'}}</text>
+                <text class="home-card__body-desc">{{notice.description || '雅思机经备考技巧与策略分享，帮助你更高效地提升水平'}}</text>
               </view>
               <view class="home-card__meta">
                 <image src="/images/v2/heart_bt.png"></image>
@@ -39,16 +42,19 @@
       </tap-action>
     </view>
   </view>
+
   <!-- 主体内容分组 -->
-  <block wx:for="{{list}}" wx:key="groupIndex" wx:for-item="group" wx:for-index="groupIndex" wx:if="{{!loading && group.list.length > 0}}">
+  <block wx:for="{{list}}" wx:key="groupIndex" wx:for-item="group" wx:for-index="groupIndex" wx:if="{{_isDataReady && group.list.length > 0}}">
     <view class="home-main-item" style="background:{{group.colorRgba}}">
       <view class="home-main-item__title" style="color:{{group.colorRgb}}">{{group.title}}</view>
+      <!-- 说明徽章（可选） -->
       <tap-action type="card" wx:if="{{group.notice}}" bind:tap="onNoticeTap" data-id="{{group.notice.id}}">
         <view class="home-main-item__notice" style="background: {{group.notice.colorRgba}};">
           <image class="home-main-item__notice-img" src="{{group.notice.iconUrl}}"></image>
           <view class="home-main-item__notice-text" style="color: {{group.notice.colorRgb}};">{{group.notice.title}}</view>
         </view>
       </tap-action>
+      <!-- 卡片容器 -->
       <view class="{{group.layoutMode === 'QUAD_GRID' ? 'home-main-item__content--grid' : 'home-main-item__content'}}">
         <block wx:for="{{group.list}}" wx:key="subjectIndex" wx:for-item="subject" wx:for-index="subjectIndex">
           <tap-action type="card" bind:tap="toChildPage" data-item="{{subject}}" data-is-inside="{{group.isInside}}">
