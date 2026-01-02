@@ -1,10 +1,11 @@
 const api = require('../../../utils/api')
 const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
+const smartLoading = require('../../../behaviors/smartLoading')
 let audio
 
 Page({
-  behaviors: [pageGuard.behavior, pageLoading],
+  behaviors: [pageGuard.behavior, pageLoading, smartLoading],
 
   data: {
     param: {},
@@ -63,6 +64,7 @@ Page({
       qid: this.options.qid,
       sid: this.options.sid
     }, isPull).then(() => {
+      _this.markLoaded()
       _this.setDataReady()
       _this.finishLoading()
     }).catch(() => {

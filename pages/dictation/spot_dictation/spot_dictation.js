@@ -90,6 +90,8 @@ Page({
     })
   },
   toList: function () {
+    // 跳转前停止播放
+    this.pauseAudio()
     this.navigateTo('../sentence_list/sentence_list?sid=' + this.options.sid + "&paragraphId=" + this.data.paragraph.id)
   },
   onHide: function () { },
@@ -231,6 +233,8 @@ Page({
         success: ({ tempFilePath, statusCode }) => {
           if (statusCode === 200) {
             audio.src = tempFilePath
+            // 存入 storage，供 sentence_list 页面使用
+            wx.setStorageSync('tempAudioUrl', tempFilePath)
             _this.setDataReady()
             _this.finishAudioPageLoading()
             _this.updateButtonGroupHeight()
@@ -239,6 +243,7 @@ Page({
         fail() {
           // 下载失败时直接使用原始URL
           audio.src = audioUrl
+          wx.setStorageSync('tempAudioUrl', audioUrl)
           _this.setDataReady()
           _this.finishAudioPageLoading()
           _this.updateButtonGroupHeight()

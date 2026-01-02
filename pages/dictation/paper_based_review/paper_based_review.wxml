@@ -1,6 +1,7 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
-<veiw class="report-card">
+<skeleton type="list" loading="{{!_isDataReady}}" rows="{{5}}" />
+<view class="report-card" wx:if="{{_isDataReady}}">
   <view wx:for="{{list}}" wx:key="id" class="question" hover-class="tap-active" hover-stay-time="100">
     <view class="question__no">{{index+1}}</view>
     <switch checked="{{item.status === 2}}" bindchange="switchChange" data-index="{{index}}" color="#F92F60" style='zoom:.8;' />
@@ -17,7 +18,7 @@
       <image src="/images/v2/next_bt.png"></image>
     </tap-action>
   </view>
-</veiw>
+</view>
 <view class="btn-page-bottom" wx:if="{{_isDataReady}}">
   <view class="btn-group-single">
     <tap-action icon="save" bindtap="next">
