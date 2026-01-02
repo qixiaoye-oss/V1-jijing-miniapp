@@ -1,5 +1,5 @@
-<skeleton type="user" loading="{{loading}}" rows="{{4}}" />
-<view class="user-page" wx:if="{{!loading}}">
+<skeleton type="user" loading="{{!_isDataReady}}" rows="{{4}}" />
+<view class="user-page" wx:if="{{_isDataReady}}">
   <view class="user-info">
     <image class="user__avatar" src="{{user.headUrl || '/images/wechat.png'}}" mode="cover" />
     <view class="user__nickname">
@@ -11,4 +11,4 @@
   <view class="menu-item">权限 <text class="menu-item__value">{{permission_duration || '免费版'}}</text></view>
   <view class="menu-item">版本号 <text class="menu-item__value">{{version || '1.0.0'}}</text></view>
 </view>
-<role-info-popup wx:if="{{!loading}}" show="{{showPopup}}" validPeriods="{{validPeriods}}"></role-info-popup>
+<role-info-popup wx:if="{{_isDataReady}}" show="{{showPopup}}" validPeriods="{{validPeriods}}"></role-info-popup>
