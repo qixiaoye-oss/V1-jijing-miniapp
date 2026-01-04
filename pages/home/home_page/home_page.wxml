@@ -13,7 +13,7 @@
   <skeleton type="card" loading="{{loading}}" rows="{{6}}" />
 
   <!-- Head Banner + 科普区域（带渐变背景） -->
-  <head-banner wx:if="{{_isDataReady}}" title="考雅Open机经题库" subtitle="九分学长出品">
+  <head-banner wx:if="{{_isDataReady}}" title="考雅Open机经题库" subtitle="九分学长出品｜开源免费">
     <!-- 科普内容区域 -->
     <view class="home-main-item home-main-item--science" wx:if="{{popularScience.list.length > 0}}">
       <view class="home-main-item__title" style="color:var(--main-blue-color)">{{popularScience.title}}</view>
