@@ -12,15 +12,23 @@
   <!-- 骨架屏（仅在 loading 阶段显示，与初始化提示互斥） -->
   <skeleton type="card" loading="{{loading}}" rows="{{6}}" />
 
-  <!-- 科普内容区域 -->
-  <view class="home-main-item" wx:if="{{_isDataReady && popularScience.list.length > 0}}" style="background:{{popularScience.colorRgba}}">
-    <view class="home-main-item__title" style="color:{{popularScience.colorRgb}}">{{popularScience.title}}</view>
+  <!-- Head Banner + 科普区域（带渐变背景） -->
+  <view class="home-header" wx:if="{{_isDataReady}}">
+    <!-- Head Banner -->
+    <view class="head-banner">
+      <view class="head-banner__title">考雅Open机经题库</view>
+      <view class="head-banner__subtitle">九分学长出品</view>
+    </view>
+
+    <!-- 科普内容区域 -->
+    <view class="home-main-item home-main-item--science" wx:if="{{popularScience.list.length > 0}}">
+      <view class="home-main-item__title" style="color:var(--main-blue-color)">{{popularScience.title}}</view>
     <view class="home-main-item__content--grid">
       <block wx:for="{{popularScience.list}}" wx:key="noticeIndex" wx:for-item="notice" wx:for-index="noticeIndex">
         <tap-action type="card" bind:tap="toNoticePage" data-id="{{notice.id}}">
-          <view class="home-card home-card--notice" style="background:{{popularScience.colorRgba}};border-color:{{popularScience.colorRgb}};">
+          <view class="home-card home-card--notice home-card--science">
             <view class="home-card__content">
-              <view class="home-card__category" style="color: {{popularScience.colorRgb}};">{{notice.groupTitle}}</view>
+              <view class="home-card__category" style="color: var(--main-blue-color);">{{notice.groupTitle}}</view>
               <view class="home-card__body">
                 <text class="home-card__body-title">{{notice.title}}</text>
                 <text class="home-card__body-separator"> · </text>
@@ -40,6 +48,7 @@
         <view>查看所有</view>
         <image src="/images/v2/next_bt.png"></image>
       </tap-action>
+    </view>
     </view>
   </view>
 
