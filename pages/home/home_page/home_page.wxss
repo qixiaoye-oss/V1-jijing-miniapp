@@ -54,7 +54,7 @@
 .home-header {
   background: linear-gradient(180deg, var(--main-blue-color) 0%, rgba(0, 166, 237, 0) 100%);
   margin: -20px -20px 0 -20px;
-  padding: 20px;
+  padding: 20px 20px 0 20px;
 }
 
 .head-banner {
