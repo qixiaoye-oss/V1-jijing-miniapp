@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "tap-action": "/components/tap-action/index"
+    "tap-action": "/components/tap-action/index",
+    "head-banner": "/components/head-banner/index"
   }
 }

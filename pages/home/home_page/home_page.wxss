@@ -46,6 +46,8 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin: -20px;
+  padding: 20px;
 }
 
 /* ========== 2. 分组区块 ========== */
@@ -152,6 +154,17 @@
 /* 补充说明卡片样式 */
 .home-card--notice .home-card__content {
   padding: 15px;
+}
+
+/* 科普区域特殊样式 */
+.home-main-item--science {
+  background: #ffffff;
+  border: 2px dotted var(--main-blue-color);
+}
+
+.home-card--science {
+  background: #ffffff !important;
+  border-color: var(--main-blue-color) !important;
 }
 
 .home-card--notice .home-card__category {
