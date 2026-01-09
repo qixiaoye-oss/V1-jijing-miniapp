@@ -62,13 +62,16 @@ page {
 .options {
   align-items: flex-start;
   font-size: 16px;
+  margin-bottom: 10px;
 }
 
 .options view:first-child {
   margin-right: 10px;
   font-weight: bold;
-  position: relative;
-  top: 1px;
+}
+
+.options view:last-child {
+  line-height: 1.4;
 }
 
 /* ==================== 图片内容 ==================== */
