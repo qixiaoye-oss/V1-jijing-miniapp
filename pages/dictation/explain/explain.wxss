@@ -1,5 +1,5 @@
 .list_container {
-  border: 1px solid #dedede;
+  border: 1px solid var(--main-gray-color);
   border-radius: 9px;
   padding: 15px;
   margin-bottom: 15px;
@@ -38,4 +38,25 @@
   color: #999999;
   line-height: 18px;
   margin-top: 10px;
+}
+
+/* 选项区域样式 */
+.option_item {
+  align-items: flex-start;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.option_item:last-child {
+  margin-bottom: 0;
+}
+
+.option_choice {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.option_text {
+  flex: 1;
+  line-height: 1.4;
 }

@@ -30,4 +30,13 @@
     </tap-action>
   </view>
 </view>
+<!-- 选项区域 - 仅选择题/匹配题显示 -->
+<view class="list_container" wx:if="{{detail.options && detail.options.length > 0}}">
+  <view class="options_content">
+    <view wx:for="{{detail.options}}" wx:key="orderNum" wx:if="{{item.choice !== '注意'}}" class="option_item flex_row">
+      <view class="option_choice">{{item.choice}}</view>
+      <view class="option_text">{{item.content}}</view>
+    </view>
+  </view>
+</view>
 </block>
