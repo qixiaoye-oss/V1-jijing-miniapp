@@ -65,6 +65,10 @@ page {
   margin-bottom: 10px;
 }
 
+.options:last-child {
+  margin-bottom: 0;
+}
+
 .options view:first-child {
   margin-right: 10px;
   font-weight: bold;
