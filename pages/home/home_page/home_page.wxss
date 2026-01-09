@@ -46,8 +46,6 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin: -20px;
-  padding: 20px;
 }
 
 /* ========== 2. 分组区块 ========== */
@@ -99,11 +97,18 @@
   gap: 15px;
 }
 
-.home-main-item__content--grid {
-  display: grid;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-  grid-template-columns: repeat(2, 1fr);
+/* 瀑布流布局（科普模块 + QUAD_GRID 分组共用） */
+.home-main-item__content--waterfall {
+  display: flex;
+  gap: 10px;
+}
+
+.waterfall-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
 }
 
 /* ========== 3. 卡片样式 ========== */
@@ -167,52 +172,26 @@
   border-color: var(--main-blue-color) !important;
 }
 
-.home-card--notice .home-card__category {
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 10px;
-}
-
-.home-card--notice .home-card__body {
-  font-size: 14px;
-  font-weight: normal;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
-  word-wrap: break-word;
-  color: var(--main-gray-color);
-}
-
 .home-card--notice .home-card__body-title {
+  font-size: 15px;
+  font-weight: bold;
   color: #000000;
-  font-weight: normal;
-}
-
-.home-card--notice .home-card__body-separator {
-  color: var(--main-gray-color);
+  word-wrap: break-word;
 }
 
 .home-card--notice .home-card__body-desc {
-  color: var(--main-gray-color);
+  margin-top: 5px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .home-card--notice .home-card__meta {
   margin-top: 10px;
   font-size: 12px;
   line-height: 1.4;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.home-card--notice .home-card__meta image {
-  width: 14px;
-  height: 14px;
 }
 
 /* ========== 4. 操作区域 ========== */
@@ -235,4 +214,26 @@
 .home-view-all image {
   width: 20px;
   height: 20px;
+}
+
+/* ========== 5. 小程序跳转链接 ========== */
+.miniapp-links {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.miniapp-links > tap-action {
+  flex: 1;
+  min-width: 0;
+}
+
+.miniapp-link {
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  background: #ffffff;
+  border: 2px dotted var(--main-blue-color);
+  border-radius: 10px;
 }

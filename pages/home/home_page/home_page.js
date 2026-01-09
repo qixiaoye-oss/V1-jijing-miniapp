@@ -67,6 +67,26 @@ Page({
     let item = e.currentTarget.dataset.item
     this.navigateTo(this.data.pageUrl[item.type] + '?sid=' + item.id)
   },
+  /**
+   * 小程序跳转
+   */
+  onMiniappLinkTap(e) {
+    const type = e.currentTarget.dataset.type
+    const appIdMap = {
+      kouyu: 'wxb654ae86481b7566',   // 口语开源题库
+      tingli: 'wx9d02de9098ab4be3'   // 听力专项训练
+    }
+    const appId = appIdMap[type]
+    if (!appId) return
+
+    wx.navigateToMiniProgram({
+      appId,
+      envVersion: 'release',
+      fail(err) {
+        console.error('小程序跳转失败:', err)
+      }
+    })
+  },
   toChildPage(e) {
     let isInside = e.currentTarget.dataset.isInside
     if (isInside === '0') {
@@ -92,16 +112,56 @@ Page({
   // ===========业务操作 End===========
   // ===========数据获取 Start===========
   /**
+   * 将列表按奇偶索引分配到左右两列（瀑布流分列）
+   */
+  _splitToColumns(list) {
+    const leftColumn = []
+    const rightColumn = []
+    list.forEach((item, index) => {
+      if (index % 2 === 0) {
+        leftColumn.push(item)
+      } else {
+        rightColumn.push(item)
+      }
+    })
+    return { leftColumn, rightColumn }
+  },
+
+  /**
+   * 处理主体分组的瀑布流分列
+   * 为 layoutMode === 'QUAD_GRID' 的分组生成 columns 数据
+   */
+  _processGroupColumns(list) {
+    return list.map(group => {
+      if (group.layoutMode === 'QUAD_GRID' && group.list && group.list.length > 0) {
+        return {
+          ...group,
+          columns: this._splitToColumns(group.list)
+        }
+      }
+      return group
+    })
+  },
+
+  /**
    * 使用预加载的缓存数据
    */
   _useCachedData(homeData, scienceData) {
     const updateData = {}
 
     if (scienceData) {
+      // 处理科普数据分列
+      if (scienceData.popularScience && scienceData.popularScience.list) {
+        scienceData.popularScienceColumns = this._splitToColumns(scienceData.popularScience.list)
+      }
       Object.assign(updateData, scienceData)
     }
 
     if (homeData) {
+      // 处理分组数据分列
+      if (homeData.list) {
+        homeData.list = this._processGroupColumns(homeData.list)
+      }
       Object.assign(updateData, homeData)
     }
 
@@ -125,6 +185,14 @@ Page({
 
     Promise.all(promises)
       .then(([scienceData, homeData]) => {
+        // 处理科普数据分列
+        if (scienceData.popularScience && scienceData.popularScience.list) {
+          scienceData.popularScienceColumns = this._splitToColumns(scienceData.popularScience.list)
+        }
+        // 处理分组数据分列
+        if (homeData.list) {
+          homeData.list = this._processGroupColumns(homeData.list)
+        }
         // 合并数据，只调用一次 setData
         this.setData({
           ...scienceData,
