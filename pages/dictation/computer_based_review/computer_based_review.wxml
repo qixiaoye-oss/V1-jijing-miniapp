@@ -1,30 +1,51 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
-<skeleton type="sentence" loading="{{!_isDataReady}}" rows="{{5}}" />
+<skeleton type="list" loading="{{!_isDataReady}}" rows="{{5}}" />
 <wxs src="/utils/util.wxs" module="wxsUtil" />
-<view class="report-card" wx:if="{{_isDataReady}}">
-  <view class="report-card__item" wx:for="{{detail.detail}}" wx:key="id">
-    <view class="question">
+<view class="page-content" wx:if="{{_isDataReady}}">
+  <view wx:for="{{list}}" wx:key="id" class="question-card {{item.status != 1 ? 'question-card--wrong' : (item.isMark ? 'question-card--marked' : '')}}">
+    <!-- 标题行：序号 + 用户答案 + 状态 + 开关 -->
+    <view class="question-header">
       <view class="question__no">{{index+1}}</view>
-      <view class="question__user-answer {{item.status != 1?'answer_wrong':''}}">{{wxsUtil.formatNull(item.userChoice,'未填写')}}</view>
-      <tap-action icon="correct" wx:if="{{item.status == 1}}">
-        <image src="/images/v2/correct_bt.png"></image>
-      </tap-action>
-      <tap-action icon="flag" wx:else>
-        <image src="/images/v2/wrong_bt.png"></image>
-      </tap-action>
-      <tap-action icon="next" bind:tap="change" data-qid="{{item.questionId}}" data-sid="{{detail.setId}}" data-aid="{{detail.albumId}}" data-index="{{index + 1}}">
-        <image src="/images/v2/next_bt.png"></image>
-      </tap-action>
+      <view class="question__title">{{wxsUtil.formatNull(item.userChoice, '未填写')}}</view>
+      <view class="question__status {{item.status == 1 && !item.isMark ? 'question__status--gray' : ''}}">{{item.status != 1 ? '自动标记' : (item.isMark ? '已标记' : '未标记')}}</view>
+      <switch checked="{{item.status != 1 || item.isMark}}" bindchange="switchChange" data-index="{{index}}" disabled="{{item.status != 1}}" color="{{item.status != 1 ? '#F92F60' : '#FFB02E'}}" style="zoom:.7;" />
     </view>
-    <view class="right-answers">
-      <view>{{item.answer}}</view>
+
+    <!-- 单词区域 -->
+    <view class="word-section">
+      <view class="word-content">
+        <view class="flex_row">
+          <view class="word_text" wx:for="{{item.answerArr}}" wx:key="*this" wx:for-item="answer">{{answer}}</view>
+        </view>
+        <view class="word_translate">{{item.chinese}}</view>
+      </view>
+      <view class="play-btn">
+        <tap-action icon="play">
+          <image src="/images/v2/pause_bt.png" wx:if="{{item.wordPlay === 'play'}}"></image>
+          <image src="/images/v2/play_bt.png" wx:else bindtap="playWordAudio" data-index="{{index}}"></image>
+        </tap-action>
+      </view>
+    </view>
+
+    <!-- 例句区域 -->
+    <view class="sentence-section">
+      <view class="sentence-content">
+        <view class="sentence_text">{{item.content}}</view>
+        <view class="sentence_translate">{{item.chineseTranslate}}</view>
+      </view>
+      <view class="play-btn">
+        <tap-action icon="play">
+          <image src="/images/v2/pause_bt.png" wx:if="{{item.sentencePlay === 'play'}}"></image>
+          <image src="/images/v2/play_bt.png" wx:else bindtap="playSentenceAudio" data-index="{{index}}"></image>
+        </tap-action>
+      </view>
     </view>
   </view>
 </view>
 <view class="btn-page-bottom" wx:if="{{_isDataReady}}">
   <view class="btn-group-single">
-    <tap-action icon="save" bind:tap="next">
+    <tap-action icon="save" bindtap="saveAndReturn">
       <view>保存并返回</view>
       <image src="/images/v2/save_bt.png"></image>
     </tap-action>
