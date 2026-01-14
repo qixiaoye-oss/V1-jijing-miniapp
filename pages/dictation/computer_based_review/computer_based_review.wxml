@@ -47,7 +47,7 @@
 </view>
 <view class="btn-page-bottom" wx:if="{{_isDataReady}}">
   <view class="btn-group-single">
-    <tap-action icon="save" bindtap="saveAndReturn">
+    <tap-action icon="save" bind:tap="saveAndReturn">
       <view>保存并返回</view>
       <image src="/images/v2/save_bt.png"></image>
     </tap-action>
