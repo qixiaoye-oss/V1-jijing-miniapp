@@ -2,12 +2,12 @@
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <skeleton type="list" loading="{{!_isDataReady}}" rows="{{5}}" />
 <view class="page-content" wx:if="{{_isDataReady}}">
-  <view wx:for="{{list}}" wx:key="id" class="question-card">
+  <view wx:for="{{list}}" wx:key="id" class="question-card {{item.status === 2 ? 'question-card--wrong' : ''}}">
     <!-- 标题行：序号 + 纸笔答案 + 开关 -->
     <view class="question-header">
       <view class="question__no">{{index+1}}</view>
       <view class="question__title">纸笔答案</view>
-      <switch checked="{{item.status === 2}}" bindchange="switchChange" data-index="{{index}}" color="#00D26A" style="zoom:.7;" />
+      <switch checked="{{item.status === 2}}" bindchange="switchChange" data-index="{{index}}" color="#F92F60" style="zoom:.7;" />
     </view>
 
     <!-- 单词区域 -->
