@@ -19,10 +19,6 @@ page {
   color: #b43040;
 }
 
-.user_choice {
-  text-decoration: line-through;
-}
-
 .reference_answer_cell {
   font-size: 18px;
   color: var(--main-blue-color);

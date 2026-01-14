@@ -5,17 +5,9 @@
 <view class="base_page layout_grid" wx:if="{{_isDataReady}}">
   <view wx:for="{{wordList}}" wx:key="item" class="question_container">
     <view class="user_choice_cell">
-      <block wx:if="{{item.operationType === '1'}}">
-        <view>速刷标注</view>
-      </block>
-      <block wx:else>
-        <block wx:if="{{item.userChoice}}">
-          <view class="user_choice">{{item.userChoice}}</view>
-        </block>
-        <block wx:else>
-          <view>未填写</view>
-        </block>
-      </block>
+      <block wx:if="{{item.operationType === '1'}}">速刷标注</block>
+      <block wx:elif="{{item.userChoice}}">{{item.userChoice}}</block>
+      <block wx:else>未填写</block>
     </view>
     <view class="reference_answer_cell">
       <view class="reference_answer" wx:for="{{item.answerArr}}" wx:for-item='answer' wx:key="answer">{{answer}}</view>
