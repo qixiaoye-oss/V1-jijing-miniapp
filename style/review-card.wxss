@@ -23,6 +23,11 @@
   overflow: hidden;
 }
 
+/* 最后一个卡片不需要底部间距（由蒙版B提供15px渐变间距） */
+.question-card:last-child {
+  margin-bottom: 0;
+}
+
 /* 错误状态 - 红色系 */
 .question-card--wrong {
   border-color: var(--main-red-color);
