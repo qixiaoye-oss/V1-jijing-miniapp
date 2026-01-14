@@ -28,15 +28,23 @@
   border-bottom-color: var(--main-red-color);
 }
 
-/* 序号 - 透明背景+文字 */
+/* 序号 - 半透明背景+文字 */
 .question__no {
+  background-color: var(--main-blue-color-bg);
   color: var(--main-blue-color);
   flex-shrink: 0;
-  font-size: 14px;
-  font-weight: bold;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 3px;
+  font-size: 12px;
 }
 
 .question-card--wrong .question__no {
+  background-color: var(--main-red-color-bg);
   color: var(--main-red-color);
 }
 
