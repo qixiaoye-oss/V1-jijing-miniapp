@@ -1,49 +1,7 @@
-.report-card {
-  border: 1px solid var(--question-color);
-  border-radius: 9px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 15px;
+/* 页面级滚动模式 - 使用 padding-bottom 为按钮组留空间 */
+page {
+  padding-bottom: var(--button-group-total-height-single);
 }
 
-.question {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.question__no {
-  background-color: var(--question-bcakground-color);
-  color: var(--question-color);
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  border-radius: 3px;
-  font-size: 12px;
-}
-
-.question__user-answer {
-  flex-grow: 1;
-  font-size: 14px;
-  text-align: right;
-  font-weight: bold;
-  color: var(--question-color);
-}
-
-.btn-group-single {
-  position: fixed;
-  left: 0px;
-  bottom: 0px;
-  width: calc(100% - 40px);
-  margin: 15px 20px;
-  box-sizing: border-box;
-}
-
-switch {}
+/* 引用公共卡片样式 */
+@import "/style/review-card.wxss";

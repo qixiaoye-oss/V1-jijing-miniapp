@@ -3,56 +3,5 @@ page {
   padding-bottom: var(--button-group-total-height-single);
 }
 
-.report-card {
-  border: 1px solid var(--theme-color);
-  border-radius: 9px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.question {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.question__no {
-  background-color: var(--theme-bcakground-color);
-  color: var(--theme-color);
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  border-radius: 3px;
-  font-size: 12px;
-}
-
-.question__user-answer {
-  flex-grow: 1;
-  font-size: 14px;
-}
-
-.answer_wrong {
-  color: #F8312F;
-}
-
-.right-answers {
-  color: var(--theme-color);
-  font-weight: bold;
-  line-height: 1.4;
-  font-size: 16px;
-  padding-left: 43px;
-  margin-top: 10px;
-}
-
-.scoring_reviews {
-  padding-inline: 60px;
-  padding-block: 15px;
-  text-align: center;
-}
+/* 引用公共卡片样式 */
+@import "/style/review-card.wxss";

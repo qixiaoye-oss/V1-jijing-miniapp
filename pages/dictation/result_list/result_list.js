@@ -3,23 +3,41 @@ const pageGuard = require('../../../behaviors/pageGuard')
 const pageLoading = require('../../../behaviors/pageLoading')
 const smartLoading = require('../../../behaviors/smartLoading')
 
+let audio
+
 Page({
   behaviors: [pageGuard.behavior, pageLoading, smartLoading],
-  // 只在 onLoad 加载一次，无需刷新
+
+  data: {
+    list: [],
+    detail: null,
+    currentPlayIndex: -1
+  },
+
   onLoad: function (options) {
     this.startLoading()
     this.listQuestion()
+    audio = wx.createInnerAudioContext()
+    audio.onEnded(() => {
+      this.stopAudio()
+    })
   },
+
   listQuestion() {
     const _this = this
     api.request(this, '/keyVocabulary/listExercise', {
       eid: this.options.eid,
     }, false, 'GET', false).then(res => {
-      res.detail.detail.forEach(item => {
-        item['answerArr'] = item.answer.split("|")
-      })
+      const list = res.detail.detail.map(item => ({
+        ...item,
+        answerArr: item.answer.split("|"),
+        isMark: item.status != 1, // 错误的默认标记
+        wordPlay: 'stop',
+        sentencePlay: 'stop'
+      }))
       _this.setData({
-        [`detail.detail`]: res.detail.detail
+        detail: res.detail,
+        list: list
       })
       _this.markLoaded()
       _this.setDataReady()
@@ -28,10 +46,65 @@ Page({
       pageGuard.goBack(_this)
     })
   },
-  change(e) {
-    let item = e.currentTarget.dataset
-    this.navigateTo('../explain/explain' + api.parseParams(item))
+
+  playWordAudio(e) {
+    const index = e.currentTarget.dataset.index
+    const item = this.data.list[index]
+
+    this.stopAudio()
+
+    if (item.pronunciationAudioUrl) {
+      audio.src = item.pronunciationAudioUrl
+      this.setData({
+        currentPlayIndex: index,
+        [`list[${index}].wordPlay`]: 'play'
+      })
+      wx.nextTick(() => {
+        audio.play()
+      })
+    }
   },
+
+  playSentenceAudio(e) {
+    const index = e.currentTarget.dataset.index
+    const item = this.data.list[index]
+
+    this.stopAudio()
+
+    if (item.audioUrl) {
+      audio.src = item.audioUrl
+      this.setData({
+        currentPlayIndex: index,
+        [`list[${index}].sentencePlay`]: 'play'
+      })
+      wx.nextTick(() => {
+        audio.play()
+      })
+    }
+  },
+
+  stopAudio() {
+    if (audio && !audio.paused) {
+      audio.stop()
+    }
+    const index = this.data.currentPlayIndex
+    if (index >= 0) {
+      this.setData({
+        [`list[${index}].wordPlay`]: 'stop',
+        [`list[${index}].sentencePlay`]: 'stop',
+        currentPlayIndex: -1
+      })
+    }
+  },
+
+  onHide() {
+    this.stopAudio()
+  },
+
+  onUnload() {
+    this.stopAudio()
+  },
+
   returnPage() {
     this.navigateBack()
   }
