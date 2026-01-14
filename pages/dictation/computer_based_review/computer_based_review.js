@@ -127,22 +127,20 @@ Page({
       saveLoading: true
     })
 
-    // 收集标记的题目
+    // 收集所有题目的标记状态
     const list = this.data.list
-    const markList = []
+    const markExercise = []
     for (let i = 0; i < list.length; i++) {
-      if (list[i].isMark) {
-        markList.push({
-          id: list[i].id,
-          questionId: list[i].questionId
-        })
-      }
+      markExercise.push({
+        id: list[i].id,
+        isMark: list[i].isMark ? 1 : 0
+      })
     }
 
     const _this = this
-    api.request(this, '/keyVocabulary/saveMarkWords', {
+    api.request(this, '/keyVocabulary/saveExercise', {
       eid: this.options.eid,
-      markList: markList
+      markExercise: markExercise
     }, true, 'POST').then(res => {
       _this.navigateBack()
     }).catch(() => {
