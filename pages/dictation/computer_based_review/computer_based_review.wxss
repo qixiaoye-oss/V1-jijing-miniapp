@@ -1,2 +1,7 @@
+/* 页面级滚动模式 - 使用 padding-bottom 为按钮组留空间 */
+page {
+  padding-bottom: var(--button-group-total-height-single);
+}
+
 /* 引用公共卡片样式 */
 @import "/style/review-card.wxss";

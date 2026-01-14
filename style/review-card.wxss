@@ -9,9 +9,7 @@
  */
 
 /* 页面内容区域 */
-.page-content {
-  padding-bottom: var(--button-group-total-height-single);
-}
+/* 注意：padding-bottom 需在页面级 wxss 中设置 page 元素，而非此处 */
 
 /* ==================== 题目卡片 ==================== */
 
