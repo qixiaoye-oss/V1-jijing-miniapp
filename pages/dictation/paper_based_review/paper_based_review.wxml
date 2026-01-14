@@ -1,22 +1,44 @@
 <import src="/templates/page-loading.wxml" />
 <template is="pageLoading" data="{{loading, loadProgress}}" />
 <skeleton type="list" loading="{{!_isDataReady}}" rows="{{5}}" />
-<view class="report-card" wx:if="{{_isDataReady}}">
-  <view wx:for="{{list}}" wx:key="id" class="question" hover-class="tap-active" hover-stay-time="100">
-    <view class="question__no">{{index+1}}</view>
-    <switch checked="{{item.status === 2}}" bindchange="switchChange" data-index="{{index}}" color="#F92F60" style='zoom:.8;' />
-    <tap-action icon="correct" wx:if="{{item.status === 1}}">
-      <image src="/images/v2/correct_bt.png"></image>
-    </tap-action>
-    <tap-action icon="flag" wx:if="{{item.status === 2}}">
-      <image src="/images/v2/wrong_bt.png"></image>
-    </tap-action>
-    <view class="question__user-answer" bindtap="change" data-qid="{{item.id}}" data-index="{{index + 1}}">
-      <text wx:for="{{item.answerArr}}" wx:for-item='answer' wx:key="answer">{{answer}}</text>
+<view class="page-content" wx:if="{{_isDataReady}}">
+  <view wx:for="{{list}}" wx:key="id" class="question-card">
+    <!-- 标题行：序号 + 纸笔答案 + 开关 -->
+    <view class="question-header">
+      <view class="question__no">{{index+1}}</view>
+      <view class="question__title">纸笔答案</view>
+      <switch checked="{{item.status === 2}}" bindchange="switchChange" data-index="{{index}}" color="#00D26A" style="zoom:.7;" />
     </view>
-    <tap-action icon="next" bindtap="change" data-qid="{{item.id}}" data-index="{{index + 1}}">
-      <image src="/images/v2/next_bt.png"></image>
-    </tap-action>
+
+    <!-- 单词区域 -->
+    <view class="word-section">
+      <view class="word-content">
+        <view class="flex_row">
+          <view class="word_text" wx:for="{{item.answerArr}}" wx:key="*this" wx:for-item="answer">{{answer}}</view>
+        </view>
+        <view class="word_translate">{{item.chinese}}</view>
+      </view>
+      <view class="play-btn">
+        <tap-action icon="play">
+          <image src="/images/v2/pause_bt.png" wx:if="{{item.wordPlay === 'play'}}"></image>
+          <image src="/images/v2/play_bt.png" wx:else bindtap="playWordAudio" data-index="{{index}}"></image>
+        </tap-action>
+      </view>
+    </view>
+
+    <!-- 例句区域 -->
+    <view class="sentence-section">
+      <view class="sentence-content">
+        <view class="sentence_text">{{item.content}}</view>
+        <view class="sentence_translate">{{item.parentChinese}}</view>
+      </view>
+      <view class="play-btn">
+        <tap-action icon="play">
+          <image src="/images/v2/pause_bt.png" wx:if="{{item.sentencePlay === 'play'}}"></image>
+          <image src="/images/v2/play_bt.png" wx:else bindtap="playSentenceAudio" data-index="{{index}}"></image>
+        </tap-action>
+      </view>
+    </view>
   </view>
 </view>
 <view class="btn-page-bottom" wx:if="{{_isDataReady}}">
