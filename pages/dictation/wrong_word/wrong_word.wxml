@@ -6,14 +6,14 @@
   <view wx:for="{{wordList}}" wx:key="item" class="question_container">
     <view class="user_choice_cell">
       <block wx:if="{{item.operationType === '1'}}">
-        <view class="f17">速刷标注</view>
+        <view>速刷标注</view>
       </block>
       <block wx:else>
         <block wx:if="{{item.userChoice}}">
           <view class="user_choice">{{item.userChoice}}</view>
         </block>
         <block wx:else>
-          <view class="f17">未填写</view>
+          <view>未填写</view>
         </block>
       </block>
     </view>

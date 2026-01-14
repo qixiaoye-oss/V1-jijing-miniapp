@@ -14,13 +14,9 @@ page {
 }
 
 .user_choice_cell {
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
   color: #b43040;
-}
-
-.f17 {
-  font-size: 14px;
 }
 
 .user_choice {
