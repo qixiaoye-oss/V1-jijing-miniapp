@@ -7,6 +7,7 @@
     <view class="question-header">
       <view class="question__no">{{index+1}}</view>
       <view class="question__title">纸笔答案</view>
+      <view class="question__status">{{item.status === 2 ? '错误' : '默认正确'}}</view>
       <switch checked="{{item.status === 2}}" bindchange="switchChange" data-index="{{index}}" color="#F92F60" style="zoom:.7;" />
     </view>
 

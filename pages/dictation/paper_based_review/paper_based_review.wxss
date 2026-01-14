@@ -58,6 +58,16 @@
   color: var(--main-red-color);
 }
 
+/* 状态文字 */
+.question__status {
+  font-size: 12px;
+  color: var(--main-blue-color);
+}
+
+.question-card--wrong .question__status {
+  color: var(--main-red-color);
+}
+
 /* 单词区域 */
 .word-section {
   display: flex;
