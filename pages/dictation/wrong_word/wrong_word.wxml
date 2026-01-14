@@ -5,7 +5,7 @@
 <view class="base_page layout_grid" wx:if="{{_isDataReady}}">
   <view wx:for="{{wordList}}" wx:key="item" class="question_container">
     <view class="user_choice_cell">
-      <block wx:if="{{item.operationType === '1'}}">速刷标注</block>
+      <block wx:if="{{item.operationType === '1'}}">手动标记</block>
       <block wx:elif="{{item.userChoice}}">{{item.userChoice}}</block>
       <block wx:else>未填写</block>
     </view>
@@ -15,7 +15,7 @@
     <view class="chinese_cell">{{item.chinese}}</view>
     <view class="flex_row_bet">
       <block wx:if="{{item.operationType === '1'}}">
-        <view class="error_count_bg">速刷标注</view>
+        <view class="error_count_bg">手动标记</view>
       </block>
       <block wx:else>
         <view class="error_count_bg {{item.errorCount > 2 ?'bg_red':''}}">错{{item.errorCount}}次</view>
