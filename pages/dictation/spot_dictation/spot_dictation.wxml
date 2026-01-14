@@ -10,30 +10,34 @@
     <swiper class="swiper_container" previous-margin="30px" next-margin="30px" bindchange='swiperSwitch' current='{{swiperCurrent}}'>
       <swiper-item class="swiper_item_container font_color_base" wx:for="{{list}}" wx:key="item" wx:for-item="group" wx:for-index="groupIndex">
         <view class="swiper_content_container">
-          <view class="content_container" wx:if="{{group.list[0].answerType == 1}}">
-            <view wx:if="{{baseShowArticle}}" class="article_open_cell flex_col_cen">
-              <view class="font_color_base reference_answer_cell">{{group.list[0].referenceAnswer}}</view>
-              <view class="translation_text" wx:if="{{group.list[0].chinese}}">{{group.list[0].chinese}}</view>
-            </view>
-            <block wx:else>
-              <view wx:if="{{showArticle}}" class="article_open_cell flex_col_cen">
+          <!-- 顶部区域：可压缩、可滚动 -->
+          <view class="top_area_wrapper">
+            <view class="content_container" wx:if="{{group.list[0].answerType == 1}}">
+              <view wx:if="{{baseShowArticle}}" class="article_open_cell flex_col_cen">
                 <view class="font_color_base reference_answer_cell">{{group.list[0].referenceAnswer}}</view>
                 <view class="translation_text" wx:if="{{group.list[0].chinese}}">{{group.list[0].chinese}}</view>
               </view>
               <block wx:else>
-                <view class="close_open_cell flex_row_cen">
-                  <image class="close_open_img" src="/images/v2/hidden_bt.png"></image>
+                <view wx:if="{{showArticle}}" class="article_open_cell flex_col_cen">
+                  <view class="font_color_base reference_answer_cell">{{group.list[0].referenceAnswer}}</view>
+                  <view class="translation_text" wx:if="{{group.list[0].chinese}}">{{group.list[0].chinese}}</view>
                 </view>
+                <block wx:else>
+                  <view class="close_open_cell flex_row_cen">
+                    <image class="close_open_img" src="/images/v2/hidden_bt.png"></image>
+                  </view>
+                </block>
               </block>
-            </block>
-          </view>
-          <image class="content_img" mode="aspectFit" wx:if="{{group.list[0].imageUrl}}" src="{{group.list[0].imageUrl}}"></image>
-          <view wx:else class="content_img">
-            <view wx:for="{{group.list[0].options}}" wx:key="option" wx:for-item="option" wx:for-index="optionIndex" class="flex_row options">
-              <view>{{option.choice}}</view>
-              <view>{{option.content}}</view>
+            </view>
+            <image class="content_img" mode="aspectFit" wx:if="{{group.list[0].imageUrl}}" src="{{group.list[0].imageUrl}}"></image>
+            <view wx:else class="content_img">
+              <view wx:for="{{group.list[0].options}}" wx:key="option" wx:for-item="option" wx:for-index="optionIndex" class="flex_row options">
+                <view>{{option.choice}}</view>
+                <view>{{option.content}}</view>
+              </view>
             </view>
           </view>
+          <!-- 底部区域：固定高度 -->
           <view class="question_container" wx:for="{{group.list}}" wx:key="idx">
             <view scroll-y='true' class="question_contant">{{item.question}}</view>
             <block wx:if="{{mode === 'paper'}}">

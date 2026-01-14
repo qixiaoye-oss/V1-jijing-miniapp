@@ -94,6 +94,9 @@ Page({
     this.pauseAudio()
     this.navigateTo('../sentence_list/sentence_list?sid=' + this.options.sid + "&paragraphId=" + this.data.paragraph.id)
   },
+  onResize: function () {
+    this.updateButtonGroupHeight()
+  },
   onHide: function () { },
   onUnload: function () {
     this.zero()
