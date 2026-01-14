@@ -113,6 +113,18 @@
   color: var(--main-gray-color);
 }
 
+/* 开关组容器 */
+.question__switch-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 开关组禁用状态 */
+.question__switch-group--disabled {
+  opacity: 0.5;
+}
+
 /* ==================== 单词区域 ==================== */
 
 .word-section {
