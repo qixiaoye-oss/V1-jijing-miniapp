@@ -32,6 +32,7 @@ Page({
         ...item,
         answerArr: item.answer.split("|"),
         isMark: item.status != 1, // 错误的默认标记
+        originalMark: item.status != 1, // 记录原始标记状态，用于判断是否有变化
         wordPlay: 'stop',
         sentencePlay: 'stop'
       }))
@@ -127,21 +128,39 @@ Page({
       saveLoading: true
     })
 
-    // 收集所有题目的标记状态
+    const _this = this
     const list = this.data.list
-    const markExercise = []
+    const detail = this.data.detail
+    const promises = []
+
+    // 遍历所有题目，找出标记状态发生变化的
     for (let i = 0; i < list.length; i++) {
-      markExercise.push({
-        id: list[i].id,
-        isMark: list[i].isMark ? 1 : 0
-      })
+      const item = list[i]
+      // 只处理正确题目的标记变化（错误题目不允许手动操作）
+      if (item.status == 1 && item.isMark !== item.originalMark) {
+        const params = {
+          aid: detail.albumId,
+          sid: detail.setId,
+          bid: item.questionId
+        }
+        if (item.isMark) {
+          // 新增标记
+          promises.push(api.request(_this, '/keyVocabulary/saveCallout', params, false, 'GET', false))
+        } else {
+          // 取消标记
+          promises.push(api.request(_this, '/keyVocabulary/delCallout', params, false, 'GET', false))
+        }
+      }
     }
 
-    const _this = this
-    api.request(this, '/keyVocabulary/saveExercise', {
-      eid: this.options.eid,
-      markExercise: markExercise
-    }, true, 'POST').then(res => {
+    // 如果没有变化，直接返回
+    if (promises.length === 0) {
+      _this.navigateBack()
+      return
+    }
+
+    // 等待所有请求完成
+    Promise.all(promises).then(() => {
       _this.navigateBack()
     }).catch(() => {
       _this.setData({ saveLoading: false })
