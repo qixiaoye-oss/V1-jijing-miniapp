@@ -14,12 +14,7 @@
     </view>
     <view class="chinese_cell">{{item.chinese}}</view>
     <view class="flex_row_bet">
-      <block wx:if="{{item.operationType === '1'}}">
-        <view class="error_count_bg">手动标记</view>
-      </block>
-      <block wx:else>
-        <view class="error_count_bg {{item.errorCount > 2 ?'bg_red':''}}">错{{item.errorCount}}次</view>
-      </block>
+      <view class="error_count_bg {{item.errorCount > 2 ?'bg_red':''}}">错{{item.errorCount}}次</view>
       <view class="btn-pos-right">
         <tap-action icon="play">
           <image class="audio_play_img" src="/images/v2/pause_bt.png" wx:if="{{item.audioPlay ==='play'}}" data-index="{{index}}" bindtap="pauseAudio"></image>

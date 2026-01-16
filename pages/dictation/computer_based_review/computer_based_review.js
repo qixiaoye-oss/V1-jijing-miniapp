@@ -137,11 +137,13 @@ Page({
     for (let i = 0; i < list.length; i++) {
       const item = list[i]
       // 只处理正确题目的标记变化（错误题目不允许手动操作）
+
       if (item.status == 1 && item.isMark !== item.originalMark) {
         const params = {
           aid: detail.albumId,
           sid: detail.setId,
-          bid: item.questionId
+          bid: item.questionId,
+          userChoice: item.userChoice
         }
         if (item.isMark) {
           // 新增标记
@@ -163,7 +165,9 @@ Page({
     Promise.all(promises).then(() => {
       _this.navigateBack()
     }).catch(() => {
-      _this.setData({ saveLoading: false })
+      _this.setData({
+        saveLoading: false
+      })
     })
   }
 })
