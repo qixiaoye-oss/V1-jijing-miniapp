@@ -71,16 +71,11 @@ Page({
    * 小程序跳转
    */
   onMiniappLinkTap(e) {
-    const type = e.currentTarget.dataset.type
-    const appIdMap = {
-      kouyu: 'wxb654ae86481b7566',   // 口语开源题库
-      tingli: 'wx9d02de9098ab4be3'   // 听力专项训练
-    }
-    const appId = appIdMap[type]
-    if (!appId) return
+    const { appid } = e.currentTarget.dataset
+    if (!appid) return
 
     wx.navigateToMiniProgram({
-      appId,
+      appId: appid,
       envVersion: 'release',
       fail(err) {
         console.error('小程序跳转失败:', err)
@@ -154,6 +149,15 @@ Page({
       if (scienceData.popularScience && scienceData.popularScience.list) {
         scienceData.popularScienceColumns = this._splitToColumns(scienceData.popularScience.list)
       }
+      // 提取settings数据
+      if (scienceData.settings) {
+        const miniappInfo = scienceData.settings.miniapp_info?.[0]
+        if (miniappInfo) {
+          scienceData.headerTitle = miniappInfo.title
+          scienceData.headerSubtitle = miniappInfo.description
+        }
+        scienceData.miniappAssociation = scienceData.settings.miniapp_association || []
+      }
       Object.assign(updateData, scienceData)
     }
 
@@ -188,6 +192,15 @@ Page({
         // 处理科普数据分列
         if (scienceData.popularScience && scienceData.popularScience.list) {
           scienceData.popularScienceColumns = this._splitToColumns(scienceData.popularScience.list)
+        }
+        // 提取settings数据
+        if (scienceData.settings) {
+          const miniappInfo = scienceData.settings.miniapp_info?.[0]
+          if (miniappInfo) {
+            scienceData.headerTitle = miniappInfo.title
+            scienceData.headerSubtitle = miniappInfo.description
+          }
+          scienceData.miniappAssociation = scienceData.settings.miniapp_association || []
         }
         // 处理分组数据分列
         if (homeData.list) {
